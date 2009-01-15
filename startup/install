@@ -1,0 +1,26 @@
+# Getting LightFrame
+
+You have two options of getting LightFrame:
+
+**One:** Download a [ZIP][zip] archive (or [TAR][tar]) of the [current master][repo] branch.
+<br>
+**Two:** Use [Git][git] to clone the public repository (`git clone git://github.com/wolfie/lightframe.git`)
+
+# Installing LightFrame
+
+There's nothing to install in LightFrame _per se_. You just copy the files somewhere,
+and it's ready to be used. Technically, the files aren't required to be anywhere
+special. Just as long as Apache can reach and read the files, any location will.
+
+You can have one global installation of LightFrame per server, or one per project.
+Both approach has its pros and cons. The global approach is easy to maintain,
+because it's in a central place, but it's best to keep them explicitly versioned
+(for example, `/opt/local/LightFrame/alpha1/` for the Alpha 1 release, and
+`/opt/local/LightFrame/master/` for automatically updated master branch). Otherwise
+you might break projects unintentionally between two updates.
+
+
+[repo]: http://repo.lightframe.org/
+ [git]: http://git-scm.com
+ [zip]: http://github.com/wolfie/lightframe/zipball/master
+ [tar]: http://github.com/wolfie/lightframe/tarball/master
