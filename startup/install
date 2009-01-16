@@ -1,4 +1,4 @@
-# Getting LightFrame
+﻿# Getting LightFrame
 
 You have two options of getting LightFrame:
 
@@ -6,19 +6,36 @@ You have two options of getting LightFrame:
 <br>
 **Two:** Use [Git][git] to clone the public repository (`git clone git://github.com/wolfie/lightframe.git`)
 
-# Installing LightFrame
+There you have it, the latest and greatest version of LightFrame. Easy, huh?
 
-There's nothing to install in LightFrame _per se_. You just copy the files somewhere,
-and it's ready to be used. Technically, the files aren't required to be anywhere
-special. Just as long as Apache can reach and read the files, any location will.
+***Note on using the current master***: Under normal circumstances, it
+might be hazardous to get the latest edits of a given project.
+LightFrame is, however, currently being developed in such a way, that
+the master branch is the most trusted one. All the new features are
+programmed in separate branches. _The point is_, you should (for now, at
+least) always prefer the current master over any previously tagged
+commit.
 
-You can have one global installation of LightFrame per server, or one per project.
-Both approach has its pros and cons. The global approach is easy to maintain,
-because it's in a central place, but it's best to keep them explicitly versioned
-(for example, `/opt/local/LightFrame/alpha1/` for the Alpha 1 release, and
-`/opt/local/LightFrame/master/` for automatically updated master branch). Otherwise
-you might break projects unintentionally between two updates.
+# Installing It
 
+There's nothing to install! You just decompress (if you chose to
+download an archive file) and copy the files somewhere, and it's ready
+to be used. Technically, the files aren't even required to be in any
+special location; just as long as Apache can reach and read the files,
+any location will do.
+
+**Hint:** There might be some security advantages in having LightFrame's
+files somewhere unreachable directly by Apache (i.e. not inside, or
+above, `~/public_html` nor the server's webroot, like `/var/www`)
+
+**Hint:** You can have one global installation of LightFrame per server,
+or one per project. Both approach has its pros and cons. The global
+approach is easy to maintain, because it's in a central place, but it's
+best to keep them explicitly versioned (for example,
+`/opt/local/LightFrame/alpha1/` for the Alpha 1 release, and
+`/opt/local/LightFrame/master/` for automatically updated master
+branch). Otherwise you might break projects unintentionally between two
+updates.
 
 [repo]: http://repo.lightframe.org/
  [git]: http://git-scm.com
