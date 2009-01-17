@@ -1,0 +1,84 @@
+# Groking LightFrame
+
+To really [grok](http://en.wiktionary.org/wiki/grok) the framework, the
+first step is to understand the terminology. This not only helps you to
+understand what the documentation is talking about, but this also eases
+the communication between users, e.g. when asking for help.
+
+## General {#general}
+
+Project
+
+:  Analogous to 'the website' in the general sense. A collection of
+   applications and a set of configuration files.
+   
+   _see also: "General: Application"_
+
+
+Application
+
+:  An application is a single functional part within a project. An application consists of at least one `views.php`-file, it containing at least one view. It can optionally contain also models and an URL dispatcher.
+
+   _see also: "General: Project, UMTV: View, UMTV: URL Dispatcher"_
+
+## UMTV {#umtv}
+
+UMTV 
+
+:  Stands for "URLs, Models, Templates, Views" or "URL Dispatcher, Model,
+   Template, View"
+
+
+URL Dispatcher
+
+:  A file (`urls.php` at the project root) that contains logic to
+   trigger various views, depending on which URI is being visited by the
+   browser.
+
+   _see also: "General: Project"_
+
+Model
+
+:  A native PHP object that extends LightFrame's abstract class `Model`.
+   It acts as a 'gateway' to the data in one SQL table (or, in some cases,
+   several tables). 
+
+   Found normally in an application's folder, in a file named `model.php`. _Note:_ Currently, this naming convention isn't enforced, but it might be in the future.
+
+   _see also: "Model: Field", "General: Application"_
+
+
+Template
+
+:  A file that is used to generate dynamic content (most often HTML, but
+   it's not enforced and probably will not be) by the help of context
+   variables and special annotation.
+
+   _see also: "Template: Context", "Template: Tag"_
+
+
+View
+
+:  Any PHP function that accepts an associative array as an argument,
+   and returns a `Respose` object. Most often, the `Response` object
+   defines a template and a context-array. 
+
+   _see also: "View: Response", "Template: Context"_
+
+### Model {#model}
+
+Field
+:  
+
+### Template {#template}
+
+Context
+:  
+
+Tag
+:  
+
+### View {#view}
+
+Response
+:  
