@@ -1,4 +1,4 @@
-﻿# Getting LightFrame
+# Getting It
 
 You have two options of getting LightFrame:
 
@@ -15,6 +15,11 @@ the master branch is the most trusted one. All the new features are
 programmed in separate branches. _The point is_, you should (for now, at
 least) always prefer the current master over any previously tagged
 commit.
+
+[repo]: http://repo.lightframe.org/
+ [git]: http://git-scm.com
+ [zip]: http://github.com/wolfie/lightframe/zipball/master
+ [tar]: http://github.com/wolfie/lightframe/tarball/master
 
 # Installing It
 
@@ -37,7 +42,13 @@ best to keep them explicitly versioned (for example,
 branch). Otherwise you might break projects unintentionally between two
 updates.
 
-[repo]: http://repo.lightframe.org/
- [git]: http://git-scm.com
- [zip]: http://github.com/wolfie/lightframe/zipball/master
- [tar]: http://github.com/wolfie/lightframe/tarball/master
+# Testing It
+
+At this point, it might be good to check that everything's set up
+properly &ndash; just to make sure.
+
+Unfortunately, this is not as trivial as the two steps before, _yet_. For now, it's a bit of manual labor, and you have two ways of accomplishing this.
+
+## The Command Line Way
+
+## The Manual Way

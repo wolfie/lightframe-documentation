@@ -7,9 +7,10 @@ the communication between users, e.g. when asking for help.
 
 ## General {#general}
 
-Project
+Project {#foo}
 
-:  Analogous to 'the website' in the general sense. A collection of
+:  
+   Analogous to 'the website' in the general sense. A collection of
    applications and a set of configuration files.
    
    _see also: "General: Application"_
@@ -17,7 +18,11 @@ Project
 
 Application
 
-:  An application is a single functional part within a project. An application consists of at least one `views.php`-file, it containing at least one view. It can optionally contain also models and an URL dispatcher.
+:  
+   An application is a single functional part within a project. An
+   application consists of at least one `views.php`-file, it containing
+   at least one view. It can optionally contain also models and an URL
+   dispatcher.
 
    _see also: "General: Project, UMTV: View, UMTV: URL Dispatcher"_
 
@@ -25,13 +30,15 @@ Application
 
 UMTV 
 
-:  Stands for "URLs, Models, Templates, Views" or "URL Dispatcher, Model,
+:  
+   Stands for "URLs, Models, Templates, Views" or "URL Dispatcher, Model,
    Template, View"
 
 
 URL Dispatcher
 
-:  A file (`urls.php` at the project root) that contains logic to
+:  
+   A file (`urls.php` at the project root) that contains logic to
    trigger various views, depending on which URI is being visited by the
    browser.
 
@@ -39,46 +46,68 @@ URL Dispatcher
 
 Model
 
-:  A native PHP object that extends LightFrame's abstract class `Model`.
+:  
+   A native PHP object that extends LightFrame's abstract class `Model`.
    It acts as a 'gateway' to the data in one SQL table (or, in some cases,
    several tables). 
 
-   Found normally in an application's folder, in a file named `model.php`. _Note:_ Currently, this naming convention isn't enforced, but it might be in the future.
+   Found normally in an application's folder, in a file named
+   `model.php`. _Note:_ Currently, this naming convention isn't
+   enforced, but it might be in the future.
 
    _see also: "Model: Field", "General: Application"_
 
 
 Template
 
-:  A file that is used to generate dynamic content (most often HTML, but
-   it's not enforced and probably will not be) by the help of context
-   variables and special annotation.
+:  
+   A file that defines how the resulting document looks like. It
+   contains comments, variables and tags, which are used to generate
+   dynamic content.
 
    _see also: "Template: Context", "Template: Tag"_
 
 
 View
 
-:  Any PHP function that accepts an associative array as an argument,
+:  
+   Any PHP function that accepts an associative array as an argument,
    and returns a `Respose` object. Most often, the `Response` object
    defines a template and a context-array. 
+   
+   _Note:_ Do not confuse this with the [MVC][mvc_wikipedia]-model's _view_. This view is closer to the MVC's _controller_.
 
    _see also: "View: Response", "Template: Context"_
+   
+[mvc_wikipedia]: http://en.wikipedia.org/wiki/Model-view-controller
 
 ### Model {#model}
 
 Field
+
 :  
+   A class for a member variable of a `Model` object. For example, the
+   `IntField` class can represent and store values typed integer.
 
 ### Template {#template}
 
 Context
+
 :  
+   An (ordinary) associative array that is passed from view to template.
+   The template can then use the value within the context by its key.
 
 Tag
+
 :  
+   A short string within a template to evoke display logic. Tags can be
+   _simple_ (no end-tag, like `{% extends %}`), _blocks_ (has an end
+   tag, like `{% comment %}..{% endcomment %}`), or _complex_ (contains of
+   many parts, like `{% if %}..{% else %}..{% endif %}`)
 
 ### View {#view}
 
 Response
+
 :  
+   An object that must be returned by a View function. It acts not only as a container for template and context information, but also HTTP headers. You could also enter raw HTML into a `Response`, if you really insist.
