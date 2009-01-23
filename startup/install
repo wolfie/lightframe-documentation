@@ -37,10 +37,9 @@ above, `~/public_html` nor the server's webroot, like `/var/www`)
 or one per project. Both approach has its pros and cons. The global
 approach is easy to maintain, because it's in a central place, but it's
 best to keep them explicitly versioned (for example,
-`/opt/local/LightFrame/alpha1/` for the Alpha 1 release, and
-`/opt/local/LightFrame/master/` for automatically updated master
-branch). Otherwise you might break projects unintentionally between two
-updates.
+`/opt/LightFrame/alpha1/` for the Alpha 1 release, and
+`/opt/LightFrame/master/` for automatically updated master branch).
+Otherwise you might break projects unintentionally between two updates.
 
 # Testing It
 
@@ -49,6 +48,39 @@ properly &ndash; just to make sure.
 
 Unfortunately, this is not as trivial as the two steps before, _yet_. For now, it's a bit of manual labor, and you have two ways of accomplishing this.
 
-## The Command Line Way
+## The Script Way
+
+_The scripts are currently very rough around the edges, and are planned
+to be temporarily deprecated from the master branch._
+
+_Only UNIX-like servers are supported, currently_
+
+First, open up a terminal to the computer you have installed your copy
+LightFrame (open a console window, SSH, PuTTY, or what ever you are used
+to). To make sure that you have a working PHP-CLI installed, write:
+
+    $ php --version
+    
+You might expect a response like:
+
+    PHP 5.2.6 (cli) (built: Jul 17 2008 23:04:49) 
+    Copyright (c) 1997-2008 The PHP Group
+    Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies
+
+If you, however, get
+
+    -bash: php: command not found
+    
+There's something wrong with the PHP-CLI install (like, it isn't there). Solving this problem isn't in the scope of this manual (try [PHP's][php_install]).
+
+[php_install]: http://www.php.net/manual/en/install.php
+
+Then type the following commands:
+
+    $ LF_PATH="/absolute/path/to/lightframe"
+    $ chmod u+x $LF_PATH/scripts/lf_setup.php
+    $ alias lf_setup="$LF_PATH/scripts/lf_setup.php"
+
+Since that .php script is 
 
 ## The Manual Way

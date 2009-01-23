@@ -23,6 +23,9 @@ Application {#general_application}
    application consists of at least one `views.php`-file, it containing
    at least one view. It can optionally contain also models and an URL
    dispatcher.
+   
+   Each application has its own directory. These may even contain
+   sub-applications underneath the application's directory.
 
    _see also: [General: Project](#general_project), [UMTV:
    View](#umtv_view), [UMTV: URL Dispatcher](#umtv_dispatcher)_
@@ -39,11 +42,11 @@ UMTV {#umtv_umtv}
 URL Dispatcher {#umtv_dispatcher}
 
 :  
-   A file (`urls.php` at the project root) that contains logic to
-   trigger various views, depending on which URI is being visited by the
-   browser.
+   A file (`urls.php` at the project root and optionally with
+   applications) that contains logic to trigger various views, depending
+   on which URI is being visited by the browser.
 
-   _see also: [General: Project](#general_project)_
+   _see also: [General: Project](#general_project)_, [General: Application](#general_application)
 
 Model {#umtv_model}
 
