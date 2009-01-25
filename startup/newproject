@@ -1,0 +1,81 @@
+# A New Start {#newproject}
+
+Let's continue by creating a new project. You have two choices: [The
+Script Way](#newproject_script) or [The FTP Way](#newproject_ftp). You
+probably want to try The Script Way first, if possible.
+
+## The Script Way {#newproject_script}
+
+_The scripts are currently very rough around the edges and some commands
+don't even work anymore. The scripts are planned to be moved into their
+own branches, until polished._
+
+Open a console to your server (either via SSH or just a new terminal
+window). For this example, let's do a new project under your user's web
+directory, so you'll probably want to start with
+
+    cd ~/public_html/
+    mkdir testproject
+    cd testproject
+    
+Now you need to remember the path to where you installed LightFrame.
+Let's say the path was `/opt/lightframe/a1`, so you'd write
+
+    php /opt/lightframe/a1/scripts/lf_setup.php startproject
+
+You should get output like
+
+    htaccess > /home/henrikpaul/public_html/testproject
+    index.php > /home/henrikpaul/public_html/testproject
+    settings.php > /home/henrikpaul/public_html/testproject
+    urls.php > /home/henrikpaul/public_html/testproject
+
+
+## The FTP way {#newproject_ftp}
+
+`// TODO`
+
+# Testing It {#test}
+
+At this point, it might be good to check that everything's set up
+properly &ndash; just to make sure.
+
+Unfortunately, this is not as trivial as the two steps before, _yet_.
+For now, it's a bit of manual labor, and you have two ways of
+accomplishing this.
+
+## The Script Way {#test_script}
+
+First, open up a terminal to the computer you have installed your copy
+LightFrame (open a console window, SSH, PuTTY, or what ever you are used
+to). To make sure that you have a working PHP-CLI installed, write:
+
+    $ php --version
+    
+You might expect a response like:
+
+    PHP 5.2.6 (cli) (built: Jul 17 2008 23:04:49) 
+    Copyright (c) 1997-2008 The PHP Group
+    Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies
+
+If you, however, get
+
+    -bash: php: command not found
+    
+There's something wrong with the PHP-CLI install (like, it isn't there).
+Solving this problem isn't in the scope of this manual (try
+[PHP's][php_install]).
+
+[php_install]: http://www.php.net/manual/en/install.php
+
+Then type the following commands:
+
+    $ LF_PATH="/absolute/path/to/lightframe"
+    $ chmod u+x $LF_PATH/scripts/lf_setup.php
+    $ alias lf_setup="$LF_PATH/scripts/lf_setup.php"
+
+Since that .php script is 
+
+## The Manual Way {#test_manual}
+
+`// TODO`

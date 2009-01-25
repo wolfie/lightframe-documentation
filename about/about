@@ -1,0 +1,95 @@
+# About The Manual {#about}
+
+Let's start by going through the very basics of the basics: how to learn
+about LightFrame.
+
+# Previous Knowledge {#previous}
+
+This manual assumes basic knowledge in PHP. _"Basic"_ in the sense that
+you have at least written a few websites using PHP, are familiar with
+the syntax, and, most importantly, know how to [get more
+information][php_doc] about PHP. 
+
+A grasp of the object oriented side of PHP is also useful; knowing the
+difference between a class and an object, what a constructor is and how
+[one looks like in PHP5][php_constructor], how to call object methods
+and members, etc.
+
+The manual, however, tends to err on the safe side by explaining things
+from the basics, but trying to avoid tedium.
+
+[php_doc]: http://www.php.net/manual/en/
+[php_constructor]: http://www.php.net/manual/en/language.oop5.decon.php
+
+# Reading the Manual {#reading}
+
+There's a few quick things to be mentioned of the manual's features and
+conventions.
+
+## Linkable Headers {#reading_linkableheaders}
+
+Each page in the manual has been designed to explain one, and only one,
+thing at a time. The URLs should be easy to remember, bookmark and share
+with others. Each header can be linked directly to, by placing the
+cursor over the header, and clicking on the left-pointing arrow that
+appears. Your browser's address bar should now contain a direct link to
+whatever you are seeing at that moment.
+
+## Code Snippets {#reading_code}
+
+As [observational learning][wikipedia_observartional] (and subsequent
+experimentation) is such a effective method of learning, this manual is
+scattered full of things that you could (and should) try out yourself. 
+
+A code box like this:
+
+    Hello Manual!
+
+&hellip;incidates interaction between you and the computer. Because the
+context of the text is hard to guess just by looking, this manual
+defines a syntax, which should be easier to see what the corresponding
+line tries to convey.
+
+[wikipedia_observartional]: http://en.wikipedia.org/wiki/Observational_learning
+
+ - A line beginning with a dollar sign (`$`) indicates a command to be
+   run in a command line.
+ - A line beginning with colon (`:`) indicates output of a previously
+   run command.
+
+For example:
+
+    $ echo 'foo'
+    : foo
+
+...means "when you type the command `echo 'foo'`, you should see the
+word `foo` as the result."
+
+Many blocks contain PHP code. These blocks are written as
+
+    <?php
+    $foo = "bar";
+    echo $foo;
+
+or
+
+    <?php
+    ...
+    if ($condition) {
+      do_something();
+    }
+    ...
+
+The first one displays a PHP scripts in its entirety. The second one
+displays a part of a PHP script &ndash; denoted by the three periods at
+both sides of the code. You should never write the periods yourself in
+your code. So, whenever you see a code box beginning with "`<?php`",
+it's PHP source code.
+
+***Note:*** We prefer omitting the closing PHP tag (`?>`), because of
+security and performance reasons. So, this is not a bug, but by design.
+
+Unfortunately, the code box is so versatile, there are more usages than
+it is rational to figure out conventions for. Therefore, if a code box
+doesn't follow any of the previously mentioned formats, the meaning
+should be understood by its context.

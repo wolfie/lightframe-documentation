@@ -1,12 +1,59 @@
-# Getting It
+# Requirements {#reqs}
 
-You have two options of getting LightFrame:
+Before getting LightFrame, there are a few techincal requirements that
+need to be met:
 
-**One:** Download a [ZIP][zip] archive (or [TAR][tar]) of the [current master][repo] branch.
-<br>
-**Two:** Use [Git][git] to clone the public repository (`git clone git://github.com/wolfie/lightframe.git`)
+ - PHP 5.1 or higher
+ - UNIX-like server (e.g. Linux)
+ - Apache2 and PHP working with it
 
-There you have it, the latest and greatest version of LightFrame. Easy, huh?
+Then there are some other 'optional requirements' make your life easier, depending on what you are going to do.
+
+ - [PDO](http://php.net/pdo/) with SQLite drivers, if using SQLite
+ - [MySQL functions](http://php.net/mysql) if using MySQL
+ - [PostgreSQL function](http://php.net/pgsql) if using PostgreSQL
+ - Shell access to the hosting server.
+ 
+LightFrame _might_ work on other configurations aswell, but there are no
+guarantees. Naturally, it would be awesome if you could share your
+successful tests on other platforms aswell!
+
+# Getting It {#get}
+
+You have two options of getting the latest version of LightFrame:
+
+## Archive {#get_tarzip}
+
+There are two versions of the archive available: [ZIP][zip] and
+[tarball][tar]. 
+
+If you have shell access to your target server and open up a connect.
+Let's take the tarball for a spin:
+
+    $ cd ~
+    $ wget -O lightframe.tar.gz http://github.com/wolfie/lightframe/tarball/master
+    ...
+    $ tar -xzf lightframe.tar.gz
+    $ mv wolfie-lightframe-* lightframe
+
+Now you should have a `lightframe` directory right beneath your user's
+home directory, containing the very latest version of LightFrame.
+
+If you **don't** have shell access, you can alternatively download and
+extract the files on your local machine first, and then upload them e.g.
+by FTP to your server.
+
+## Git {#get_git}
+
+You can also get the [Git][git] repository, if you want (and have Git
+installed). Open a shell at the server:
+
+    $ cd ~
+    $ git clone git://github.com/wolfie/lightframe.git
+
+After a few moments, you should have the latest version of LightFrame
+underneath your home directory, in the `lightframe` directory, along
+with the complete Git history.
 
 ***Note on using the current master***: Under normal circumstances, it
 might be hazardous to get the latest edits of a given project.
@@ -21,70 +68,48 @@ commit.
  [zip]: http://github.com/wolfie/lightframe/zipball/master
  [tar]: http://github.com/wolfie/lightframe/tarball/master
 
-# Installing It
+# Installing It {#install}
 
-There's nothing to install! You just decompress (if you chose to
-download an archive file) and copy the files somewhere, and it's ready
-to be used. Technically, the files aren't even required to be in any
-special location; just as long as Apache can reach and read the files,
-any location will do.
+There's nothing to install! You did all that's necessary during the
+[previous step](#get). Just as long as Apache can reach and read the
+files, you're ready to go.
 
-**Hint:** There might be some security advantages in having LightFrame's
-files somewhere unreachable directly by Apache (i.e. not inside, or
-above, `~/public_html` nor the server's webroot, like `/var/www`)
+# Quick Test {#quicktest}
 
-**Hint:** You can have one global installation of LightFrame per server,
-or one per project. Both approach has its pros and cons. The global
-approach is easy to maintain, because it's in a central place, but it's
-best to keep them explicitly versioned (for example,
-`/opt/LightFrame/alpha1/` for the Alpha 1 release, and
-`/opt/LightFrame/master/` for automatically updated master branch).
-Otherwise you might break projects unintentionally between two updates.
-
-# Testing It
-
-At this point, it might be good to check that everything's set up
-properly &ndash; just to make sure.
-
-Unfortunately, this is not as trivial as the two steps before, _yet_.
-For now, it's a bit of manual labor, and you have two ways of
-accomplishing this.
-
-## The Script Way
-
-_The scripts are currently very rough around the edges, and are planned
-to be temporarily deprecated from the master branch._
-
-_Only UNIX-like servers are supported, currently_
-
-First, open up a terminal to the computer you have installed your copy
-LightFrame (open a console window, SSH, PuTTY, or what ever you are used
-to). To make sure that you have a working PHP-CLI installed, write:
+Open a command line shell to the server you installed LightFrame in, and
+type
 
     $ php --version
     
-You might expect a response like:
+You should get something like this:
 
-    PHP 5.2.6 (cli) (built: Jul 17 2008 23:04:49) 
-    Copyright (c) 1997-2008 The PHP Group
-    Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies
+    : PHP 5.2.6 (cli) (built: Jul 17 2008 23:04:49) 
+    : Copyright (c) 1997-2008 The PHP Group
+    : Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies
 
-If you, however, get
+If, on the other hand, you got an error, similar to
 
-    -bash: php: command not found
-    
-There's something wrong with the PHP-CLI install (like, it isn't there).
-Solving this problem isn't in the scope of this manual (try
-[PHP's][php_install]).
+    : -bash: php: command not found
 
-[php_install]: http://www.php.net/manual/en/install.php
+Your server doesn't have PHP CLI installed. This isn't a show stopper,
+but you won't be able to use any of the helper scripts described later
+in this manual.
 
-Then type the following commands:
+*[CLI]: Command Line Interface
 
-    $ LF_PATH="/absolute/path/to/lightframe"
-    $ chmod u+x $LF_PATH/scripts/lf_setup.php
-    $ alias lf_setup="$LF_PATH/scripts/lf_setup.php"
+# Configuring Scripts
 
-Since that .php script is 
+Even though the scripts in LightFrame are pretty rough around the edges
+for the moment[^1], they become handy in use. Therefore it's practical
+to put the scripts into your `$PATH`. First, you need to know which shell you are using. Run the following command:
 
-## The Manual Way
+    $ echo $PATH
+    : /bin/bash
+
+Open your shell profile file (probably one of `~/.bashrc`, `~/.profile`
+or `~/.tschrc`) and add **one** of the following lines:
+
+    export PATH=/path/to/lightframe/scripts   # if you are using bash
+    set path = ( $path /path/to/lightframe/scripts )  # if you are using tschrc
+
+[^1]: and will be _temporarily_ removed from the master branch into development branches during the next few alphas. At least partly...
