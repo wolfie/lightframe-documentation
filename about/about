@@ -5,21 +5,34 @@ about LightFrame.
 
 # Previous Knowledge {#previous}
 
-This manual assumes basic knowledge in PHP. _"Basic"_ in the sense that
-you have at least written a few websites using PHP, are familiar with
-the syntax, and, most importantly, know how to [get more
-information][php_doc] about PHP. 
+This manual makes some assumptions on your knowledge. If you find your
+skills lacking in some of the areas mentioned above, you should do some
+reading-up on the topics before continuing.
+
+The manual, however, tends to err on the safe side by explaining things
+from the basics, but trying to avoid tedium.
+
+## PHP {#previous_php}
+
+You need basic knowledge of PHP. _"Basic"_ in the sense that you have at
+least written a few websites using PHP, are familiar with the syntax,
+and, most importantly, know how to [get more information][php_doc] about
+PHP.
 
 A grasp of the object oriented side of PHP is also useful; knowing the
 difference between a class and an object, what a constructor is and how
 [one looks like in PHP5][php_constructor], how to call object methods
 and members, etc.
 
-The manual, however, tends to err on the safe side by explaining things
-from the basics, but trying to avoid tedium.
-
 [php_doc]: http://www.php.net/manual/en/
 [php_constructor]: http://www.php.net/manual/en/language.oop5.decon.php
+
+## File Manipulation {#previous_file}
+
+You also need to know how to use either a SSH client (like the `ssh`
+command on Linux, or [PuTTY][putty]) or an FTP program.
+
+[putty]: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
 
 # Reading the Manual {#reading}
 
