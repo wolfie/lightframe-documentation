@@ -54,8 +54,10 @@ Model {#umtv_model}
    several tables). 
 
    Found normally in an application's folder, in a file named
-   `model.php`. _Note:_ Currently, this naming convention isn't
-   enforced, but it might be in the future.
+   `model.php`. 
+
+   _Note:_ Currently, this naming convention isn't enforced, but it
+   might be in the future.
 
    _see also: [Model: Field](#model_field), [General:
    Application](#general_application)_
