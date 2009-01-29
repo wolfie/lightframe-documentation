@@ -1,4 +1,4 @@
-# Groking LightFrame
+# Groking LightFrame {#grok}
 
 To really [grok](http://en.wiktionary.org/wiki/grok) the framework, the
 first step is to understand the terminology. This not only helps you to
@@ -12,9 +12,8 @@ Project {#general_project}
 :  
    Analogous to 'the website' in the general sense. A collection of
    applications and a set of configuration files.
-   
-   _see also: [General: Application](#general_application)_
 
+   _see also: [General: Application](#general_application)_
 
 Application {#general_application}
 
@@ -23,7 +22,7 @@ Application {#general_application}
    application consists of at least one `views.php`-file, it containing
    at least one view. It can optionally contain also models and an URL
    dispatcher.
-   
+
    Each application has its own directory. These may even contain
    sub-applications underneath the application's directory.
 
@@ -37,7 +36,6 @@ UMTV {#umtv_umtv}
 :  
    Stands for "URLs, Models, Templates, Views" or "URL Dispatcher, Model,
    Template, View"
-
 
 URL Dispatcher {#umtv_dispatcher}
 
@@ -62,7 +60,6 @@ Model {#umtv_model}
    _see also: [Model: Field](#model_field), [General:
    Application](#general_application)_
 
-
 Template {#umtv_template}
 
 :  
@@ -73,14 +70,13 @@ Template {#umtv_template}
    _see also: [Template: Context](#template_context), [Template:
    Tag](#template_tag)_
 
-
 View {#umtv_view}
 
 :  
    Any PHP function that accepts an associative array as an argument,
    and returns a `Respose` object. Most often, the `Response` object
    defines a template and a context-array. 
-   
+
    _Note:_ Do not confuse this with the [MVC][mvc_wikipedia]-model's
    _view_. This view is closer to the MVC's _controller_.
 
