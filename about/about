@@ -12,6 +12,22 @@ reading-up on the topics before continuing.
 The manual, however, tends to err on the safe side by explaining things
 from the basics, but trying to avoid tedium.
 
+## "Linux" {#linux}
+
+Whenever you see the word "Linux" written somewhere, read it as "Linux,
+or possibly other, compatible, UNIX-derivatives".
+
+Many of the things mentioned in the Linux-context should and probably
+would work with many OSes that are like Linux. Other than the fact that
+reading and writing "Linux" is so much faster than explaining the
+possible interoperability within a class of operating systems over and
+over again, the reason this manual talks about Linux only is that these
+things are tested mainly on Linux. Another tested UNIX-like environment
+is [Darwin][wikipedia_darwin] &ndash; [Mac OS X][wikipedia_osx]'s core.
+
+[wikipedia_darwin]: http://en.wikipedia.org/wiki/Darwin_(operating_system)
+[wikipedia_osx]: http://en.wikipedia.org/wiki/Mac_OS_X
+
 ## PHP {#previous_php}
 
 You need basic knowledge of PHP. _"Basic"_ in the sense that you have at
