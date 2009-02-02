@@ -83,13 +83,13 @@ type
     
 You should get something like this:
 
-    : PHP 5.2.6 (cli) (built: Jul 17 2008 23:04:49) 
-    : Copyright (c) 1997-2008 The PHP Group
-    : Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies
+    > PHP 5.2.6 (cli) (built: Jul 17 2008 23:04:49) 
+    > Copyright (c) 1997-2008 The PHP Group
+    > Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies
 
 If, on the other hand, you got an error, similar to
 
-    : -bash: php: command not found
+    > -bash: php: command not found
 
 Your server doesn't have PHP CLI installed. This isn't a show stopper,
 but you won't be able to use any of the helper scripts described later
@@ -97,14 +97,14 @@ in this manual.
 
 *[CLI]: Command Line Interface
 
-# Configuring Scripts
+# Configuring Scripts {#scriptconf}
 
 Even though the scripts in LightFrame are pretty rough around the edges
 for the moment[^1], they become handy in use. Therefore it's practical
 to put the scripts into your `$PATH`. First, you need to know which shell you are using. Run the following command:
 
     $ echo $PATH
-    : /bin/bash
+    > /bin/bash
 
 Open your shell profile file (probably one of `~/.bashrc`, `~/.profile`
 or `~/.tschrc`) and add **one** of the following lines:

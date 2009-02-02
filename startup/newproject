@@ -14,22 +14,21 @@ Open a console to your server (either via SSH or just a new terminal
 window). For this example, let's do a new project under your user's web
 directory, so you'll probably want to start with
 
-    cd ~/public_html/
-    mkdir testproject
-    cd testproject
+    $ cd ~/public_html/
+    $ mkdir testproject
+    $ cd testproject
     
 Now you need to remember the path to where you installed LightFrame.
 Let's say the path was `/opt/lightframe/a1`, so you'd write
 
-    php /opt/lightframe/a1/scripts/lf_setup.php startproject
+    $ php /opt/lightframe/a1/scripts/lf_setup.php startproject
 
 You should get output like
 
-    htaccess > /home/henrikpaul/public_html/testproject
-    index.php > /home/henrikpaul/public_html/testproject
-    settings.php > /home/henrikpaul/public_html/testproject
-    urls.php > /home/henrikpaul/public_html/testproject
-
+    : htaccess > /home/henrikpaul/public_html/testproject
+    : index.php > /home/henrikpaul/public_html/testproject
+    : settings.php > /home/henrikpaul/public_html/testproject
+    : urls.php > /home/henrikpaul/public_html/testproject
 
 ## The FTP way {#newproject_ftp}
 

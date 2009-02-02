@@ -3,6 +3,10 @@
 Let's start by going through the very basics of the basics: how to learn
 about LightFrame.
 
+# Not Covered Here {#notcovered}
+
+We're assuming that you have a working environment. Setting up Apache, PHP or any kind of IDE/editor is outside of this manual's scope.
+
 # Previous Knowledge {#previous}
 
 This manual makes some assumptions on your knowledge. If you find your
@@ -10,7 +14,7 @@ skills lacking in some of the areas mentioned above, you should do some
 reading-up on the topics before continuing.
 
 The manual, however, tends to err on the safe side by explaining things
-from the basics, but trying to avoid tedium.
+from the basics, still trying to avoid tedium.
 
 ## "Linux" {#linux}
 
@@ -18,39 +22,39 @@ Whenever you see the word "Linux" written somewhere, read it as "Linux,
 or possibly other, compatible, UNIX-derivatives".
 
 Many of the things mentioned in the Linux-context should and probably
-would work with many OSes that are like Linux. Other than the fact that
-reading and writing "Linux" is so much faster than explaining the
+would work with many UNIX-like operating systems. Other than the fact
+that reading and writing "Linux" is so much faster than explaining the
 possible interoperability within a class of operating systems over and
 over again, the reason this manual talks about Linux only is that these
-things are tested mainly on Linux. Another tested UNIX-like environment
-is [Darwin][wikipedia_darwin] &ndash; [Mac OS X][wikipedia_osx]'s core.
+things are tested mainly on Linux (and [Darwin][wikipedia_darwin], [Mac
+OS X][wikipedia_osx]'s core).
 
 [wikipedia_darwin]: http://en.wikipedia.org/wiki/Darwin_(operating_system)
 [wikipedia_osx]: http://en.wikipedia.org/wiki/Mac_OS_X
 
 ## PHP {#previous_php}
 
-You need basic knowledge of PHP. _"Basic"_ in the sense that you have at
-least written a few websites using PHP, are familiar with the syntax,
-and, most importantly, know how to [get more information][php_doc] about
-PHP.
+Obviously, you need to know PHP. Not only do you need to know PHP to
+write your website, PHP is used to configure your website. LightFrame
+uses [PHP5's object oriented][php_oop] features, so you need to know
+something about them. But, push come to shove, you probably can figure
+stuff out by looking at the examples and copying from there.
 
-A grasp of the object oriented side of PHP is also useful; knowing the
-difference between a class and an object, what a constructor is and how
-[one looks like in PHP5][php_constructor], how to call object methods
-and members, etc.
+If you, however, don't know PHP, you need to be motivated to learn PHP.
+Otherwise you are at in the wrong place, should take a look at
+[Wikipedia's list of web application frameworks][wikipedia_waf] and try
+again.
 
-[php_doc]: http://www.php.net/manual/en/
-[php_constructor]: http://www.php.net/manual/en/language.oop5.decon.php
+[php_oop]: http://php.net/manual/en/language.oop5.php
+[wikipedia_waf]: http://en.wikipedia.org/wiki/List_of_web_application_frameworks
 
-## File Manipulation {#previous_file}
+## Remote Access {#previous_remote}
 
-You also need to know how to use either a SSH client (like the `ssh`
-command on Linux, or [PuTTY][putty]) or an FTP program.
+In case you are using a remote computer as your server, you need to know how to use either remote shell access (e.g. with `ssh` or [PuTTY][putty]) or at least an FTP client.
 
 [putty]: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
 
-# Reading the Manual {#reading}
+# Understanding the Manual {#understanding}
 
 There's a few quick things to be mentioned of the manual's features and
 conventions.
@@ -81,15 +85,17 @@ line tries to convey.
 
 [wikipedia_observartional]: http://en.wikipedia.org/wiki/Observational_learning
 
- - A line beginning with a dollar sign (`$`) indicates a command to be
+ - 
+   A line beginning with a dollar sign (`$`) indicates a command to be
    run in a command line.
- - A line beginning with colon (`:`) indicates output of a previously
-   run command.
+ - 
+   A line beginning with a greater-than sign (`>`) indicates the output
+   of a previously run command.
 
 For example:
 
     $ echo 'foo'
-    : foo
+    > foo
 
 ...means "when you type the command `echo 'foo'`, you should see the
 word `foo` as the result."
