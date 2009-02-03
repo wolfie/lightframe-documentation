@@ -100,8 +100,9 @@ in this manual.
 # Configuring Scripts {#scriptconf}
 
 Even though the scripts in LightFrame are pretty rough around the edges
-for the moment[^1], they become handy in use. Therefore it's practical
-to put the scripts into your `$PATH`. First, you need to know which shell you are using. Run the following command:
+for the moment, they become handy in use. Therefore it's practical to
+put the scripts into your `$PATH`. First, you need to know which shell
+you are using. Run the following command:
 
     $ echo $PATH
     > /bin/bash
@@ -111,5 +112,17 @@ or `~/.tschrc`) and add **one** of the following lines:
 
     export PATH=/path/to/lightframe/scripts   # if you are using bash
     set path = ( $path /path/to/lightframe/scripts )  # if you are using tschrc
+    
+Then, run the following command, to make sure that the LightFrame
+scripts is executable by your shell
 
-[^1]: and will be _temporarily_ removed from the master branch into development branches during the next few alphas. At least partly...
+    $ chmod +x /path/to/lightframe/scripts/*.php
+    
+Now you are ready to test out the scripts!
+
+    $ lf_setup.php
+    > To get more info about a particular command, use "help <command>" as an argument.
+    >
+    > startproject
+    > scanserver
+    > createdb
