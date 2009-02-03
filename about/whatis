@@ -6,8 +6,8 @@ It enforces an [MVC][wikipedia_mvc]-like decoupling structure, called
 _UMTV_, for increased [code decoupling][wikipedia_decouple] and, thus,
 maintainability.
 
-The **URL dispatcher** lets you design beautiful URLs. You control how
-you present yourself to the public, not your application.
+The **URL dispatcher** lets you design beautiful URLs. Your application
+doesn't control how it presents itself to the public, _you_ do.
 
 **Model**s are used to interact with the database in a natural object
 oriented way. If you want to save an object to the database, just do it!
@@ -17,7 +17,8 @@ Display your elegant webpages with a powerful **Template** engine. The
 dynamic presentation logic on top of vanilla (X)HTML and CSS makes
 keeping your layouts fresh effortless.
 
-**View**s bind all this together, by collecting the needed data from Models, processing the data, and forwarding what's needed to Templates.
+**View**s bind all this together, by collecting the needed data from
+Models, processing the data, and forwarding what's needed to Templates.
 
 [wikipedia_waf]: http://en.wikipedia.org/wiki/Web_application_framework
 [wikipedia_mvc]: http://en.wikipedia.org/wiki/Model_view_controller
