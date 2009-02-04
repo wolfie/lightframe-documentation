@@ -91,7 +91,7 @@ put the scripts into your `$PATH`. First, you need to know which shell
 you are using. Run the following command:
 
     $ echo $SHELL
-    > /bin/bash
+    /bin/bash
 
 Open your shell profile file (probably one of `~/.bashrc`, `~/.profile`
 or `~/.tschrc`) and add **one** of the following lines:
@@ -107,8 +107,8 @@ scripts is executable by your shell
 Now you are ready to test out the scripts!
 
     $ lf_setup.php
-    > To get more info about a particular command, use "help <command>" as an argument.
-    >
-    > startproject
-    > scanserver
-    > createdb
+    To get more info about a particular command, use "help <command>" as an argument.
+    
+    startproject
+    scanserver
+    createdb

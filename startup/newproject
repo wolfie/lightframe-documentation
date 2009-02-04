@@ -33,13 +33,10 @@ previously, you can now write a simple command to get template files for
 a new project:
 
     $ lf_setup.php startproject
-
-You should get output like
-
-    > htaccess > /home/henrikpaul/public_html/testproject
-    > index.php > /home/henrikpaul/public_html/testproject
-    > settings.php > /home/henrikpaul/public_html/testproject
-    > urls.php > /home/henrikpaul/public_html/testproject
+    htaccess > /home/henrikpaul/public_html/testproject
+    ndex.php > /home/henrikpaul/public_html/testproject
+    settings.php > /home/henrikpaul/public_html/testproject
+    urls.php > /home/henrikpaul/public_html/testproject
 
 For now, you need to manually rename the `.htaccess`-file so that Apache
 recognizes it.
