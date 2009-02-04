@@ -9,6 +9,7 @@ need to be met:
 
 Then there are some other 'optional requirements' make your life easier, depending on what you are going to do.
 
+ - Apache has `mod_rewrite` loaded, and allows for `.htaccess` override.
  - [PDO](http://php.net/pdo/) with SQLite drivers, if using SQLite
  - [MySQL functions](http://php.net/mysql) if using MySQL
  - [PostgreSQL function](http://php.net/pgsql) if using PostgreSQL
