@@ -123,8 +123,9 @@ both sides of the code. You should never write the periods yourself in
 your code. So, whenever you see a code box beginning with "`<?php`",
 it's PHP source code.
 
-***Note:*** We prefer omitting the closing PHP tag (`?>`), because of
-security and performance reasons. So, this is not a bug, but by design.
+***Note:*** We prefer omitting the closing PHP tag (`?>`) in files
+containing only PHP code, because of security and performance reasons.
+So, this is not a bug, but by design.
 
 Unfortunately, the code box is so versatile, there are more usages than
 it is rational to figure out conventions for. Therefore, if a code box
