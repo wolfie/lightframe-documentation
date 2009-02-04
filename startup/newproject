@@ -38,6 +38,8 @@ a new project:
     settings.php > /home/henrikpaul/public_html/testproject
     urls.php > /home/henrikpaul/public_html/testproject
 
+    new project created!
+
 For now, you need to manually rename the `.htaccess`-file so that Apache
 recognizes it.
 
