@@ -1,14 +1,24 @@
 # A New Start {#newproject}
 
-Let's continue by creating a new project. You have two choices: [The
-Script Way](#newproject_script) or [The FTP Way](#newproject_ftp). You
-probably want to try The Script Way first, if possible.
+Now, let's set up the basic structure, used by any given LightFrame
+project. There are two methods listed: using LightFrame's scripts or
+FTP. If you do have shell access to the server, but don't have PHP CLI
+at your disposal, you shouldn't have too much trouble understanding what
+needs to be done, by reading both methods, and combining them suitably.
 
-## The Script Way {#newproject_script}
+*[CLI]: Command Line Interface
+
+## Creating Project Files {#newproject_files}
+
+We'll start by getting the core files up and running for your project.
+These files need to be present at each and every project. Once they are
+set up, they're set, and hardly ever need further adjustment later on.
+
+### The Script Way {#newproject_files_script}
 
 _The scripts are currently very rough around the edges and some commands
-don't even work anymore. The scripts are planned to be moved into their
-own branches, until polished._
+don't even work anymore. Some script commands are planned to be moved
+into their own branches, until polished to completion._
 
 Open a console to your server (either via SSH or just a new terminal
 window). For this example, let's do a new project under your user's web
@@ -18,10 +28,11 @@ directory, so you'll probably want to start with
     $ mkdir testproject
     $ cd testproject
     
-Now you need to remember the path to where you installed LightFrame.
-Let's say the path was `/opt/lightframe/a1`, so you'd write
+Assuming you have LightFrame's scripts in your `$PATH`, as instructed
+previously, you can now write a simple command to get template files for
+a new project:
 
-    $ php /opt/lightframe/a1/scripts/lf_setup.php startproject
+    $ lf_setup.php startproject
 
 You should get output like
 
@@ -30,51 +41,32 @@ You should get output like
     > settings.php > /home/henrikpaul/public_html/testproject
     > urls.php > /home/henrikpaul/public_html/testproject
 
-## The FTP way {#newproject_ftp}
+For now, you need to manually rename the `.htaccess`-file so that Apache
+recognizes it.
 
-`// TODO`
+    $ mv htaccess .htaccess
+
+### Using FTP {#newproject_files_ftp}
+
+There's no point in transferring files over just yet, because we need to
+edit some files first. Instead, create a new directory in your local
+computer (on a Windows machine, the "My Documents" folder is good a
+place as any &ndash; users of Linux might enjoy using the user's home
+directory), and call it e.g. "testproject".
+
+Find out where you have LightFrame (if you have downloaded a compressed
+archive, now would be a good time to extract it), and go to the
+`scripts/projectfiles/` subdirectory, where you'll find the following
+files: `htaccess`, `index.php`, `settings.php` and `urls.php`. 
+
+Copy all four files to the directory you just created and then rename
+`htaccess` to `.htaccess`.
+
+## Basic Project Configuration {#newproject_script_conf}
+
+
 
 # Testing It {#test}
 
 At this point, it might be good to check that everything's set up
 properly &ndash; just to make sure.
-
-Unfortunately, this is not as trivial as the two steps before, _yet_.
-For now, it's a bit of manual labor, and you have two ways of
-accomplishing this.
-
-## The Script Way {#test_script}
-
-First, open up a terminal to the computer you have installed your copy
-LightFrame (open a console window, SSH, PuTTY, or what ever you are used
-to). To make sure that you have a working PHP-CLI installed, write:
-
-    $ php --version
-    
-You might expect a response like:
-
-    > PHP 5.2.6 (cli) (built: Jul 17 2008 23:04:49) 
-    > Copyright (c) 1997-2008 The PHP Group
-    > Zend Engine v2.2.0, Copyright (c) 1998-2008 Zend Technologies
-
-If you, however, get
-
-    > -bash: php: command not found
-    
-There's something wrong with the PHP-CLI install (like, it isn't there).
-Solving this problem isn't in the scope of this manual (try
-[PHP's][php_install]).
-
-[php_install]: http://www.php.net/manual/en/install.php
-
-Then type the following commands:
-
-    $ LF_PATH="/absolute/path/to/lightframe"
-    $ chmod u+x $LF_PATH/scripts/lf_setup.php
-    $ alias lf_setup="$LF_PATH/scripts/lf_setup.php"
-
-Since that .php script is 
-
-## The Manual Way {#test_manual}
-
-`// TODO`
