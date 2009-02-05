@@ -44,6 +44,13 @@ For now, you need to manually rename the `.htaccess`-file so that Apache
 recognizes it.
 
     $ mv htaccess .htaccess
+    
+And let's also make two directories, for later use:
+
+    $ mkdir apps templates
+    
+Now you can continue with [Basic Project
+Configuration](#newproject_conf).
 
 ### Using FTP {#newproject_files_ftp}
 
@@ -61,9 +68,102 @@ files: `htaccess`, `index.php`, `settings.php` and `urls.php`.
 Copy all four files to the directory you just created and then rename
 `htaccess` to `.htaccess`.
 
-## Basic Project Configuration {#newproject_script_conf}
+## Basic Project Configuration {#newproject_conf}
+
+_This part will be made easier in the future..._ 
+
+Let's configure the project files now. There are three files that need
+to be configured for LightFrame to be set up and running, for that
+particular project.
+
+For each chapter, open the file and edit them as instructed.
+
+### index.php {#newproject_conf_index}
+
+This is where the magic begins. But it needs a bit of a nudge - you need to define both where LightFrame is, and where your project is.
 
 
+`// TODO: Too long - make this shorter!`<br>
+The reason to define both of them manually is that &mdash;**a)**&mdash;
+you can install LightFrame once, and use that one for all your projects.
+Or, if you choose, you can have one LightFrame whenever you need it.
+Doesn't matter, you define it yourself; and &mdash;**b)**&mdash; you
+don't have to have your project in your web path. You can have it stowed
+away somewhere unexpected (like, directly underneath your home
+directory), decreasing the chances of your application being abused and
+hacked. Or, if you choose, you can have it conveniently in the same mix
+as `index.php`.
+
+When you open the file, there's two lines of code you need to change:
+
+    <?php
+    define('LF_LIGHTFRAME_PATH',''); // The path to where LightFrame is installed
+    define('LF_PROJECT_PATH',''); // The path where your project files are
+    ...
+
+So, an example of the end result could look like thus:
+
+    <?php
+    define('LF_LIGHTFRAME_PATH','/home/wolfie/lightframe');
+    define('LF_PROJECT_PATH','/home/wolfie/public_html/testproject');
+    ...
+
+Remember to omit the trailing slashes whenever you enter paths to
+LightFrame configurations. Also, the user that Apache runs as needs to
+have read-access to both directories, and their subdirectories. If
+everything else fails, put both your project and LightFrame underneath
+your `public_html` directory.
+
+_NB:_ In case you're doing the editing on your local computer for now,
+remember to write the paths as they were in the remote server!
+
+### .htaccess {#newproject_conf_htaccess}
+
+Take your favorite text editor and open the newly created `.htaccess`.
+
+Remove the hash-character (`#`) before the lines beginning with
+"`Rewrite`". Replace the slash after "RewriteBase" with whatever comes
+after the domain name, when you would open the project-to-be in your
+browser. So, if the URL would be, for example,
+`http://www.example.com/~your_username/testproject/`, your `.htaccess`
+should have the following lines:
+
+    RewriteEngine on
+    RewriteBase /~your_username/testproject/
+    RewriteCond %{REQUEST_URI} !index\.php
+    RewriteRule ^(.*)$ index.php?$1 [PT,L]
+
+### settings.php {#newproject_conf_settings}
+
+This is where the _real_ configuration takes place. This isn't a
+complete handbook of all settings and their effects. We're just going to
+glance over the most crucial ones.
+
+Find the following lines:
+
+    <?php
+    ...
+    define ('LF_SITE_PATH', ''); // the path (include trailing slash) to your site. 
+    ...
+    define ('LF_APACHE_MODREWRITE', false); // Whether MOD_REWRITE is supported or not
+    ...
+
+Use the same value for `LF_SITE_PATH` as you previously used in
+`.htaccess` for `RewriteBase`. You should also change the value of
+`LF_APACHE_MODREWRITE` from `false` to `true`.
+
+Hit save, close, and you're done confing for now.
+
+### FTP users {#newproject_conf_ftp}
+
+If you haven't been working on the remote server directly previously,
+_now_ is the time to move all the files over to the server. Remember
+which paths you have written in `index.php` and upload both LightFrame
+and your project stub in their respective places. Remember to check file
+permissions before exiting the software - Apache needs to be able to
+read the files.
+
+Remember the paths you defined for 
 
 # Testing It {#test}
 
