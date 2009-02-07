@@ -169,3 +169,10 @@ Remember the paths you defined for
 
 At this point, it might be good to check that everything's set up
 properly &ndash; just to make sure.
+
+Open your browser with URL where the webpage should be deployed at (e.g.
+`http://example.com/~your_username/testproject/`). You should be greeted
+by a warming welcome message. To be sure, add some random text at the
+end of the URL and try to visit that. If you are still greeted by that
+same message, everything's dandy. If you get a 404, your Apache's
+`mod_rewrite` settings are wonky and should be fixed.
