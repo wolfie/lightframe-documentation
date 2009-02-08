@@ -1,0 +1,62 @@
+# Caveats {#caveats}
+
+There are a few things you should know about LightFrame when evaluating
+it and trying it out. While LightFrame does some things well, there
+other uses where LightFrame isn't the best choice around.
+
+# What LightFrame Does Not {#doesnt}
+
+It would be just stupid and naïve to claim that LightFrame doesn't have
+its share of weaknesses. There's no point in hiding them, because they become
+apparent pretty soon. Here's some of the biggest ones:
+
+## Speed Up Your Site {#doesnt_speedup}
+
+LightFrame is a general framework. It doesn't have any special target
+problem domains, to which it would be best suited for. It's designed to
+work with most (or even "any") websites and web applications. This means
+that LightFrame probably has code that you will never use. But they
+still put a strain on the total page load.
+
+It is strongly not recommended to use LightFrame in any service that
+requires high responsiveness or high availability. Don't even think on
+implementing something that involves lives with LightFrame!
+
+## Consider Itself Enterprisey {#doesnt_enterprise}
+
+We have an emphasis on making the development with LightFrame fast and
+fun. Because of this, rigorousness and 'correctness' take the hits. We'd
+like to point out, however, that we make a separation between _correct_
+and _right_ &ndash; while _correct_ is proven to be _right_, _right_ is
+just the expected outcome.
+
+The API of LightFrame is bound to change rapidly. What is written now,
+will most probably not work in a year with the latest version of
+LightFrame. If you want the newest and the sweetest, you need to rewrite
+your code, at least partly.
+
+*[API]:Application Programming Interface
+
+## Evolve Fast {#doesnt_evolvefast}
+
+LightFrame doesn't have as many active developers as it would have use
+of. The development doesn't include any business model or any kind of
+revenue at all, so all written code is being donated out of the
+developer's own free time, alongside normal daily routines (like working
+and doing that 'living' stuff).
+
+The product _does_ evolve, mind you. It's not as rapid as other products.
+
+# What LightFrame Does {#does}
+
+But not everything is glum. To balance things out, here are the things
+that we are most proud of about LightFrame. They might also give some
+insight when evaluating LightFrame as the framework of your choice.
+
+## Just Works on Most Webhosts {#does_work}
+
+## Forces You To Write Clean(er) Code {#does_clean}
+
+Because of its UMTV-separation `[ <-- insert link to glossary#umtv here]`
+
+*[UMTV]: URLs, Models, Templates, Views
