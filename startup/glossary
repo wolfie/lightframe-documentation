@@ -7,6 +7,21 @@ the communication between users, e.g. when asking for help.
 
 ## General {#general}
 
+Developer {#general_developer}
+
+:  
+   Anyone who writes code for/into LightFrame.
+
+User {#general_user}
+
+:  
+   A person that uses LightFrame as a framework for its website.
+   
+Visitor {#general_visitor}
+
+:  
+   A person who browses a site that is made with LightFrame.
+
 Project {#general_project}
 
 :  
