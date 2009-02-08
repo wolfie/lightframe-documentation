@@ -55,8 +55,31 @@ insight when evaluating LightFrame as the framework of your choice.
 
 ## Just Works on Most Webhosts {#does_work}
 
+LightFrame has been designed specifically to have as few dependencies as
+possible, without making it a hassle for you, the user. It doesn't
+require modifications to any administrative files (such as PHP's
+`php.ini` or Apache's `httpd.conf`), and the software can be deployed
+wherever the web server has read access (including beneath a user's home
+directory).
+
+LightFrame will, however, take as much advantage as possible from
+libraries that _are_ present (like support for Apache's `mod_rewrite`).
+Some features might be disabled eniterly, if a dependency isn't met, but
+in many cases, LightFrame tries to work around the missing parts, if
+possible.
+
 ## Forces You To Write Clean(er) Code {#does_clean}
 
-Because of its UMTV-separation `[ <-- insert link to glossary#umtv here]`
+Because of its [UMTV-separation][umtv], the code of a website will be
+split into several distinct parts. While this might be a bit confusing
+to newcomers, it makes the code much more maintainable and easier to
+read in the long run.
+
+The advantages don't stop at working with LightFrame &ndash; this will
+teach good programming practices to those who aren't familiar with [code
+decoupling][wikipedia_decoupling].
+
+[wikipedia_decoupling]:http://en.wikipedia.org/wiki/Decoupling#Software_Development
+[umtv]:../../startup/glossary/#umtv
 
 *[UMTV]: URLs, Models, Templates, Views
