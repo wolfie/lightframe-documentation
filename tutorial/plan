@@ -1,0 +1,36 @@
+# The Plan {#plan}
+
+Before we proceed to the coding itself, there are some things that are
+important things we need to mention.
+
+The code in this example is far from what should be considered
+production ready, safe, or even stabile. While the end result is
+something functional, it shouldn't be used for anything important.
+Actually, it shouldn't be used for anything &ndash; strike that; it's
+better if you just erase it altogether once you followed it once.
+
+The code might also be ugly at some parts, or represent procedures that
+aren't recommended. In these kinds of situation, it will be explicitly
+mentioned.
+
+The code has been whipped together for its educational values only. Use
+it to understand the framework, tamper and play with it, to see what
+happens when you modify it. But, to be absolutely clear, do not use it
+for anything else than for your own amusement, or you _will_ get hacked.
+
+Just your friendly warning&hellip;
+
+# The Do's and Don'ts {#features}
+
+Let's define the scope of the example, what it does, and what it
+doesn't:
+
+The project in question will be a light [wiki][wiki]. It won't be using
+a markup language traditionally found at wikis, as HTML will be used
+instead. You will be able to create new pages, edit existing ones and
+delete unwanted pages.
+
+[wiki]: http://en.wikipedia.org/wiki/Wiki
+
+On the other hand, there will not be any kind of login system, nor
+restrictions on who can do what &ndash; it's an open system. 

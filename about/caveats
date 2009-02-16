@@ -18,6 +18,10 @@ work with most (or even "any") websites and web applications. This means
 that LightFrame probably has code that you will never use. But they
 still put a strain on the total page load.
 
+Running your web application on top of LightFrame will probably not make
+it faster than if you would have written it from scratch for its own
+special purpose.
+
 It is strongly not recommended to use LightFrame in any service that
 requires high responsiveness or high availability. Don't even think on
 implementing something that involves lives with LightFrame!
@@ -25,15 +29,16 @@ implementing something that involves lives with LightFrame!
 ## Consider Itself Enterprisey {#doesnt_enterprise}
 
 We have an emphasis on making the development with LightFrame fast and
-fun. Because of this, rigorousness and 'correctness' take the hits. We'd
-like to point out, however, that we make a separation between _correct_
-and _right_ &ndash; while _correct_ is proven to be _right_, _right_ is
-just the expected outcome.
+fun. Because of this, rigorousness and 'correctness' take the hits. The
+API of LightFrame is bound to change rapidly. What is written now, will
+most probably not work in a year with the latest version of LightFrame.
+If you want the newest and the sweetest, you need to rewrite your code,
+at least partly.
 
-The API of LightFrame is bound to change rapidly. What is written now,
-will most probably not work in a year with the latest version of
-LightFrame. If you want the newest and the sweetest, you need to rewrite
-your code, at least partly.
+We'd like to point out, however, that we make a separation between
+_correct_ and _right_ &ndash; while _correct_ is proven to be _right_,
+_right_ is simply the expected outcome, without a rigorous theoretical
+background.
 
 *[API]:Application Programming Interface
 
