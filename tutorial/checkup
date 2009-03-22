@@ -1,3 +1,55 @@
-# Getting to the Action {#action}
+# Preparing for the Action {#action}
 
-foo
+We'll continue where we left off with our project stub. You should have
+a project set up so that the default content gets displayed without any
+errors or warnings &ndash; easily noticeable by the distinct lack of any
+404 or 500-errors.
+
+# Prepping the Database {#db}
+
+For this tutorial, we'll use the database. Unfortunately, you need to
+set the database up yourself, as LightFrame doesn't currently have any
+automated tools to do that for you ([#137](http://www.assembla.com/spaces/lightframe/tickets/137)).
+
+The database schema is as follows:
+
+    // TODO: insert one here, once the Models are known
+
+Remember to modify your `settings.php` accordingly, as you need to
+modify the `LF_SQL_*` configurations for LightFrame to be aware of your
+database. For the MySQL example for above, I'd write something in the
+lines of:
+
+    <?php
+    ...
+    define ('LF_SQL_RDBMS',  'mysql');
+    define ('LF_SQL_HOST',   'localhost');
+    define ('LF_SQL_DBNAME', 'lfwiki');
+    define ('LF_SQL_USER',   'lfwiki');
+    define ('LF_SQL_PASS',   'secretpassword');
+    ...
+
+# Check, Check and Check {#check}
+
+Let's check that everything else is ready to begin, so we start at a
+common point:
+
+The path structure should be as follows:
+
+    apps/
+    templates/
+    .htaccess
+    index.php
+    settings.php
+    sqlite.db
+    urls.php
+    
+You should have `settings.php` configured so that `LF_APPS_PATH` points
+to the `apps/` directory, and `LF_TEMPLATES_PATH` points to the
+`templates/` directory. This example also assumes that you have Apache's
+`mod_rewrite` enabled, and both `settings.php` and `.htaccess`
+configured accordingly.
+
+Last, but not least, when visiting the URL of the project, it should
+display the default LightFrame page, indicating a functioning
+environment. 

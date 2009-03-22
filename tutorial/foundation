@@ -1,0 +1,106 @@
+# Model {#model}
+
+Let's start with making the model. We won't be using it just yet, but I
+think it's good to get it done first thing. It reminds us what we're
+dealing with here, really.
+
+We'll be needing only one model for this exercise and that is the wiki
+page itself. The model will be very simple, as it contains only the name
+of the page and its text body.
+
+Start by creating a new directory under the `apps`-directory, called
+"wiki".
+
+    $ mkdir -p apps/wiki 
+    $ cd apps/wiki
+
+Create a new file called `models.php` with your favorite editor
+
+    $ vim models.php
+
+...and create a `WikiPage` Model class inside:
+
+    <?php 
+    class WikiPage extends Model { 
+      public function __construct() {
+        $this->title = new TextField(); 
+        $this->body  = new TextField(); 
+      } 
+    }
+
+Save this file. We have now defined a `WikiPage` Model class that has
+two Fields: a title field and a body field, both containing text.
+
+Note how the class members are defined: they must be defined and
+initialized inside the class constructor, otherwise they will not work
+as intended. All fields are treated as public.
+
+That's it! This is all we need to do to get stuff to and from the
+database.
+
+# Warm Welcome {#welcome}
+
+Next, we'll create the welcoming screen. For this, we'll create a template file called `welcome.html` in the `templates`-directory.
+
+    $ cd ../..
+    $ pwd   # make sure this is the project's root
+    /home/wolfie/lfdemo
+    $ cd templates
+    $ vim welcome.html
+    
+We'll start with a very simple pure HTML document, to make sure that
+everything's still functioning properly.
+
+    <html>
+    <head>
+      <title>My wiki!</title>
+    </head>
+    <body>
+      <h1>Welcome!</h1>
+    </body>
+    </html>
+
+To get this showing as the default page, we need to go back and edit the `urls.php` in the project's root directory:
+
+    $ cd ..
+    $ vim urls.php
+
+Clear the file, and write the following lines instead:
+
+    <?php
+    addURL('^$', 'basic/show', array('template' => 'welcome.html'));
+    
+...and save.
+
+## Explaining `urls.php` briefly {#explain}
+
+Let's look a bit at what we did there:
+
+First of all, `urls.php` is the so-called URL dispatcher. It looks at the URL the user is trying to visit, matches it against some patterns you give it, and determines what happens at which URL.
+
+Let's take this bit-by-bit:
+
+- `addURL`: You define URLs with this function.
+- `'^$'`: The first argument is a [regular expression][wikipedia_regexp]
+that is tried to match with the visited URL. This URL matches only the
+project's web root.
+- `'basic/show'`: The second argument is the View that handles this URL.
+"basic/show" is a built-in view that just takes a template and shows it to
+the visitor.
+- `array('template' => 'welcome.html')`: The third argument is actually
+arguments passed to the chosen View. In our case, it tells the
+`basic/show` view that the template that should be shown is
+`welcome.html`.
+ 
+[wikipedia_regexp]:http://en.wikipedia.org/wiki/Regular_expression
+ 
+## Visit your site {#visit}
+ 
+Visit your project's webpage. You should be greeted with a big and
+hearty "Welcome!" Congratulations, this is your own first steps with
+LightFrame!
+
+# Next {#next}
+
+Now that we have a solid start, let's get things more lively. Continue
+to the next chapter.

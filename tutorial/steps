@@ -1,0 +1,123 @@
+# First Steps {#first}
+
+It's time to create the landing page for this wiki. In our wiki, it will
+be a full index of all pages in the wiki. We'll also provide a separate
+link for creating new wiki pages on this page.
+
+Since LightFrame is an MVC-like framework, the problem needs to be
+divided into "[business logic][wikipedia_bl]", the view, and
+"presentation logic", the template.
+
+[wikipedia_bl]:http://en.wikipedia.org/wiki/Business_logic
+
+# View {#view}
+
+The business logic side of the index page is very simple. What needs to
+be brought from the database into view is only the index of all wiki
+pages. For this, create a views-file in the wiki app directory created
+earlier:
+
+    $ cd apps/wiki
+    $ vim views.php
+
+Let's call the index view function something imaginative, like "index":
+
+    <?php
+    require 'models.php';
+    
+    function index($args) {
+      $pages = new Entries('WikiPage'); // Get all WikiPage entries
+      
+      $response = new Response();
+      $response->template('welcome.html');
+      $response->context(array('pages' => $pages));
+      
+      return $response;
+    }
+    
+## Analysis {#view_analysis}
+
+First, the `models.php` file is brought in, that contains the `WikiPage`
+Model we created earlier. This needs to be done manually, as LightFrame
+doesn't have means to load dynamically the required `models.php`-file
+([#172](http://www.assembla.com/spaces/lightframe/tickets/172)).
+
+Inside the `index` view function, we get `Entries` of all `WikiPage`s.
+`Entries` is a special object that kind of acts as a glorified array for
+all instances of a certain Model. In this case, it represents all
+`WikiPage`s, because we aren't filtering it in any way.
+
+Next, we create a `Response` object. The responsibility of any and all
+view functions is to return a `Response` object. If it doesn't do that,
+LightFrame will report an error. In this case, we say that the response
+should be built from the template `welcome.html` (which we will modify
+next), mashed together with a context that contains only the data of
+`$pages`. This reference is named, unsurprisingly 'pages'.
+
+Now we can use the data we got from the database in our template, to
+build the wiki's index. This is all we need.
+
+# Template {#template}
+
+Let's get back to our very simple yet welcoming HTML template that was
+created earlier.
+
+    $ cd ../../templates
+    $ vim welcome.html
+
+And insert the following text after the line with "`<h1>Welcome</h1>`":
+
+    <form method="get" action="{{ / }}">
+      <input type="text" name="page">
+      <input type="submit" value="Go/Create">
+    </form>
+
+    <h2>Wiki Index:</h2>
+    
+    {% if empty:pages %}
+      <p>
+        No pages :(
+      </p>
+    {% else %}
+      <ul>
+      {% foreach pages:page %}
+        <li><a href="{{ / }}{{ page.title }}">{{ page.title }}</a></li>
+      {% endforeach %}
+      </ul>
+    {% endif %}
+
+## Analysis {#template_analysis}
+
+The form is for creating or visiting wiki pages (we'll make it work as
+it should later in this tutorial). The "`{{ / }}`" is a placeholder for
+your site path. Two curly braces mean "print the contents of the
+variable" and the forward slash is a special variable (or constant,
+actually) that outputs the value of `LF_SITE_PATH` that you have defined
+in your `settings.php`.
+
+Next we check if "`pages`" is empty with the `if`-tag (tags are marked
+with curly braces and a percent-sign). As you might recall, `pages` is
+the `Entries` object we passed from [the view](#view) within the context
+of the Response. If `pages` is empty, we display a friendly message.
+Otherwise, we list each wiki page within in a list.
+
+The list is created with a `foreach` tag, that's similar to [PHP's
+foreach][php_foreach] construct. The HTML link consists of the site path
+with the `/`-shorthand variable together with the page's title. The
+page's title also acts as the link name itself.
+
+[php_foreach]:http://php.net/foreach
+
+# Just one more thing... {#urls}
+
+To be able to view your achievements, you need to, again, change the
+`urls.php`, so that it uses your brand new view, instead of the
+built-in:
+
+    <?php
+    addURL('^$', 'wiki/index');
+
+Go ahead and pride in your achievements by taking a look at your new
+index page.
+
+    
