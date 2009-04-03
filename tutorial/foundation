@@ -9,14 +9,11 @@ page itself. The model will be very simple, as it contains only the name
 of the page and its text body.
 
 Start by creating a new directory under the `apps`-directory, called
-"wiki".
+"wiki". Then, create a new file called `models.php` with your favorite
+editor in that directory.
 
     $ mkdir -p apps/wiki 
-    $ cd apps/wiki
-
-Create a new file called `models.php` with your favorite editor
-
-    $ vim models.php
+    $ vim apps/wiki/models.php
 
 ...and create a `WikiPage` Model class inside:
 
@@ -42,11 +39,7 @@ database.
 
 Next, we'll create the welcoming screen. For this, we'll create a template file called `welcome.html` in the `templates`-directory.
 
-    $ cd ../..
-    $ pwd   # make sure this is the project's root
-    /home/wolfie/lfdemo
-    $ cd templates
-    $ vim welcome.html
+    $ vim templates/welcome.html
     
 We'll start with a very simple pure HTML document, to make sure that
 everything's still functioning properly.
@@ -62,7 +55,6 @@ everything's still functioning properly.
 
 To get this showing as the default page, we need to go back and edit the `urls.php` in the project's root directory:
 
-    $ cd ..
     $ vim urls.php
 
 Clear the file, and write the following lines instead:

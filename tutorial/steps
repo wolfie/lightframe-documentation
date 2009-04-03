@@ -17,8 +17,7 @@ be brought from the database into view is only the index of all wiki
 pages. For this, create a views-file in the wiki app directory created
 earlier:
 
-    $ cd apps/wiki
-    $ vim views.php
+    $ vim apps/wiki/views.php
 
 Let's call the index view function something imaginative, like "index":
 
@@ -62,12 +61,11 @@ build the wiki's index. This is all we need.
 Let's get back to our very simple yet welcoming HTML template that was
 created earlier.
 
-    $ cd ../../templates
-    $ vim welcome.html
+    $ vim templates/welcome.html
 
 And insert the following text after the line with "`<h1>Welcome</h1>`":
 
-    <form method="get" action="{{ / }}">
+    <form method="post" action="{{ / }}">
       <input type="text" name="page">
       <input type="submit" value="Go/Create">
     </form>
@@ -119,5 +117,3 @@ built-in:
 
 Go ahead and pride in your achievements by taking a look at your new
 index page.
-
-    
