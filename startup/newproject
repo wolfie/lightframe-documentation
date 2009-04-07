@@ -80,19 +80,10 @@ For each chapter, open the file and edit them as instructed.
 
 ### index.php {#newproject_conf_index}
 
-This is where the magic begins. But it needs a bit of a nudge - you need to define both where LightFrame is, and where your project is.
-
-
-`// TODO: Too long - make this shorter!`<br>
-The reason to define both of them manually is that &mdash;**a)**&mdash;
-you can install LightFrame once, and use that one for all your projects.
-Or, if you choose, you can have one LightFrame whenever you need it.
-Doesn't matter, you define it yourself; and &mdash;**b)**&mdash; you
-don't have to have your project in your web path. You can have it stowed
-away somewhere unexpected (like, directly underneath your home
-directory), decreasing the chances of your application being abused and
-hacked. Or, if you choose, you can have it conveniently in the same mix
-as `index.php`.
+This is where the magic begins. But it needs a bit of a nudge - you need to
+define both where LightFrame is, and where your project is. These are defined
+explicitly, so that neither your project nor LightFrame itself needs to be in
+your web path, increasing the security of your scripts.
 
 When you open the file, there's two lines of code you need to change:
 
@@ -163,8 +154,6 @@ and your project stub in their respective places. Remember to check file
 permissions before exiting the software - Apache needs to be able to
 read the files.
 
-Remember the paths you defined for **[...aw crap, left off mid-sentence...]**
-
 # Testing It {#test}
 
 At this point, it might be good to check that everything's set up
@@ -175,4 +164,4 @@ Open your browser with URL where the webpage should be deployed at (e.g.
 by a warming welcome message. To be sure, add some random text at the
 end of the URL and try to visit that. If you are still greeted by that
 same message, everything's dandy. If you get a 404, your Apache's
-`mod_rewrite` settings are wonky and should be fixed.
+`mod_rewrite` settings are wonky (i.e. not working) and should be fixed.
