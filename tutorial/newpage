@@ -1,0 +1,144 @@
+# Turn the Page {#page}
+
+We're inching our way towards getting content into the wiki. The next step to
+that goal is to make the text input field working.
+
+The way it's supposed to work is whenever a user inputs something, the user is
+directed to a page by that name. So, input "LightFrame" into the input field, it
+should forward the user to the LightFrame wikipage.
+
+The HTML form will be sent via `POST` to the index view, as defined in the
+template earlier. This means, the index view gets the burden of making the
+redirection.
+
+Open the view, surround the previous code with an "if not set"-clause, and
+create a redirection if the the page value is given:
+
+    $ vim apps/wiki/views.php
+    
+    <?php
+    ...
+    function index($args) {
+      if ( !isset($_POST['page']) ) {
+        $pages = new Entries( 'WikiPage' ); // Get all WikiPage entries
+      
+        $response = new Response();
+        $response->template( 'welcome.html' );
+        $response->context( array('pages' => $pages) );
+      
+        return $response;
+      } 
+      
+      else {
+        $response = new Response();
+        $response->redirect( LF_SITE_PATH . $_POST['page'] . '/' );
+        return $response;
+      }
+    }
+
+In short, if I write "LightFrame" in the text field and `LF_SITE_PATH` is set to
+"/wiki/", I would be redirected to somewhere like
+`http://example.com/wiki/LightFrame/`.
+
+# Four-oh-four {#404}
+
+If you tried to use the form at some point, you probably noticed that you were
+greeted by a 404, page not found error. This is because our `urls.php` isn't up
+to speed with these changes. Currently, it knows only of an URL that doesn't
+contain any text - the URL of the project's root.
+
+We need to add more URLs for LightFrame to chew on. Open `urls.php` and add two
+more lines:
+
+    <?php
+    addURL('^$', 'wiki/index');
+    addURL('^(?P<page>.+)/edit/$', 'wiki/edit');
+    addURL('^(?P<page>.+)/$', 'wiki/show');
+
+Note that the order of the lines matter, because they are evaluated in the same
+order as they are defined – the first regexp that matches is dispatched. The
+`(?P<page>.+)`-part means that the regular expression "`.+`" will be used to
+match any given characters. The matched text will be given the name "page",
+thanks to "`?P<page>`".
+
+The first new line is for editing the pages, this will include creating new
+pages, and the second is just for showing the pages. So, an URL like
+"`example.com/wiki/LightFrame/`" would show the LightFrame article, and
+"`example.com/wiki/LightFrame/edit/`" would edit the existing article, or, if it
+doesn't exist, creates it.
+
+These changes introduced two new views: 'wiki/edit' and 'wiki/show', so let's
+get a move-on and create them.
+
+# Two Birds with One Stone {#birds}
+
+Open the wiki-app's `views.php` and let's create the two views. Since both
+editing and showing a wiki page requires the same data – access to whatever
+we're editing – I decided to create a few helping functions that do the real
+work, while the 'show' and 'edit' views just give the different templates to
+redirect the object to.
+
+    <?php
+    ...
+    function edit(array $args) {
+      return _put_page_in_template($args['context']['page'], 'edit.html');
+    }
+    
+    function show(array $args) {
+      return _put_page_in_template($args['context']['page'], 'show.html');
+    }
+    
+    function _put_page_in_template($pageTitle, $template) {
+      $context = array();
+      $context['page'] = _get_page_by_title($pageTitle);
+
+      $response = new Response();
+      $response->template( $template );
+      $response->context( $context );
+      return $response;
+    }
+
+    function _get_page_by_title($title) {
+      $pageObject = null;
+      $entries = new Entries('WikiPage');
+      $entries->keep_where_title__is($title);
+
+      if ( count($entries) >= 1) {
+        $pageObject = $entries[0];
+      } else {
+        $pageObject = new WikiPage();
+        $pageObject->title = $title;
+      }
+
+      return $pageObject;
+    }
+
+The starting underscores in `_put_page_in_template()` and `_get_page_by_title()`
+bear no special meanings; I put them there just as a note for myself that they
+aren't view functions, even if they are in the `views.php` file.
+
+Both views take a parameter 'page'. This is exactly the same parameter that
+`urls.php` sends, as you can see in the earlier code snippet.
+
+By using the `Entries`-object, we get access to all `WikiPage`s in the database
+(if any). This set is then further filtered to those articles that have whatever
+'page' is as their title. Note that LightFrame is smart enough not to fetch
+anything from the database just yet. It gets what's required at the very last
+moment &ndash; in this case, it'd be the `count()` function.
+
+As a side note, had we known the page's id number, we could've done this a bit
+easier. But, for the time being, I need to use the auxiliary function
+`_get_page_by_title()`. Also, see ticket
+[#144](http://www.assembla.com/spaces/lightframe/tickets/144).
+
+We take that wikipage (there is always only one, but the code is designed
+failsafe) and remember it. If there are no pages with the title, we create a
+new page and remember it instead.
+
+That wikipage is then sent to the right template, depeding on which view called
+the brawn-function.
+
+#Onwards! {#next}
+
+We have two new views, with distinct looks. This means, next we'll do the two
+templates required.

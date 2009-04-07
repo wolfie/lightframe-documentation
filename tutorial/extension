@@ -1,0 +1,162 @@
+#Extending Templates {#extending}
+
+It's time to unveal another feature in the template engine: Template extension.
+The idea behind template extension is to make keeping a consistent layout across
+a website as easily as possible.
+
+More often than not, any given website has some constantly occurring element in
+all of its pages within, commonly a logo in the upper left corner. Instead of
+repeating those elements every time in your layout, we create a base template,
+and use that. The templates can be extended by several layers, but we'll do fine
+with just two - the generic template, and the content template itself.
+
+First, let's track back to the earlier template we had –
+`templates/welcome.html` – which currently looks like this:
+
+	<html>
+	<head>
+		<title>My wiki!</title>
+	</head>
+	<body>
+		<h1>Welcome!</h1>
+
+		<form method="post" action="{{ / }}">
+			<input type="text" name="page">
+			<input type="submit" value="Go/Create">
+		</form>
+
+		<h2>Wiki Index:</h2>
+
+		{% if empty:pages %}
+			<p>
+				No pages :(
+			</p>
+		{% else %}
+			<ul>
+			{% foreach pages:page %}
+				<li><a href="{{ / }}{{ page.title }}">{{ page.title }}</a></li>
+			{% endforeach %}
+			</ul>
+		{% endif %}
+	</body>
+	</html>
+
+Let's convert this so that it extends a template:
+
+	{% extends "/base.html" %}
+
+	{% block title %}
+		Welcome
+	{% endblock %}
+	
+	{% block body %}
+		<form method="post" action="{{ / }}">
+			<input type="text" name="page">
+			<input type="submit" value="Go/Create">
+		</form>
+
+		<h2>Wiki Index:</h2>
+
+		{% if empty:pages %}
+			<p>
+				No pages :(
+			</p>
+		{% else %}
+			<ul>
+			{% foreach pages:page %}
+				<li><a href="{{ / }}{{ page.title }}">{{ page.title }}</a></li>
+			{% endforeach %}
+			</ul>
+		{% endif %}
+	{% endblock %}
+
+This template would now extend a `base.html` that would reside in the root _of
+the templates directory_, hence the slash in front of the filename. Since we
+don't have one, let's create it:
+
+	<html>
+	<head>
+		<title>{% block title %}Title{% endblock %} - My wiki!</title>
+	</head>
+	<body>
+		<h1>{% block title %}{% endblock %}</h1>
+		
+		{% block body %}
+		<p>
+			Default body block
+		</p>
+		{% endblock %}
+	</body>
+	</html>
+
+There's our base template. What's going on here is pretty simple, actually:
+Since we have the special `extends`-tag as the first thing in our template (it
+must be, otherwise it won't work,) whenever our revamped `welcome.html` gets
+rendered, it first loads up `base.html` and scans it through. Whenever it
+encounters a `block`-tag in `base.html`, it tries to find a matching block from
+its own template. If it finds it, it puts its own contents inside the found
+block. When all blocks have been gone through, it renders the result. If there's
+no match, what the _parent_ template has inside the `block`-tag, stays.
+
+So, in our case, the text "Welcome" would be inserted in both the `<title>`-tag
+and `<h1>`, and the body itself would come underneath the `<h1>`-tag. Pretty
+simple, isn't it.
+
+In the future, whenever we create a new template, we want to extend `base.html`.
+If, for some reason, we aren't happy with what we have in the base template, we
+just edit it in one file, and the changes are instantly visible across the
+application.
+
+#Back on Track {#track}
+
+To get back to the actual progress, we were two templates short: `show.html` and
+`edit.html`. Let's keep them as simple as possible. Starting with `show.html`, in the `templates` directory:
+
+	{% extends "/base.html" %}
+	
+	{% block title %}
+		{{ page.title }}
+	{% endblock %}
+	
+	{% block body %}
+		<a href="{{ / }}">Back</a> | <a href="edit/">Edit</a>
+		<hr>
+		<p>
+			{{ page.body|safe|default:<i>Blank page!</i> }}
+		</p>
+	{% endblock %}
+
+And for `edit.html`, we've got the following:
+
+	{% extends "/base.html" %}
+	
+	{% block title %}
+		Editing "{{ page.title }}"
+	{% endblock %}
+	
+	{% block body %}
+		<a href="{{ / }}">Back</a>
+		<hr>
+		<form method="post" action=".">
+		<textarea name="body">{{ page.body|safe }}</textarea>
+		<br>
+		<input type="submit" value="save">
+		</form>
+	{% endblock %}
+
+What's in these templates is pretty straightforward. One thing that's worth
+mentioning is the "`|safe`"-part. Stuff in a variable that come after a pipe
+(the '`|`'-character) are filters. You can combine several filters by separating
+them by pipes. Filters modify the shown value of a variable (not the actual
+value, mind). Since LightFrame HTML-escapes everything suspicious that is
+printed out from a variable, we need to mark the value of the `body`-field as
+safe to render even if there are HTML-entities. This is done with the
+"safe"-filter. We do this because that's what the field contains - raw HTML.
+
+I feel it necessary to point out, again, that this is a very stupid thing to do
+- letting your visitors store raw HTML, and subsequently display the HTML as-is.
+That's where many security holes begin (and end, depending on the cracker's
+mood).
+
+With that done and taken care of, there's still some final tweaks to do -
+actually editing and saving the pages!

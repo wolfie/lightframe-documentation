@@ -79,7 +79,7 @@ And insert the following text after the line with "`<h1>Welcome</h1>`":
     {% else %}
       <ul>
       {% foreach pages:page %}
-        <li><a href="{{ / }}{{ page.title }}">{{ page.title }}</a></li>
+        <li><a href="{{ / }}{{ page.title }}/">{{ page.title }}</a></li>
       {% endforeach %}
       </ul>
     {% endif %}

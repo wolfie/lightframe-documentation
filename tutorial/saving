@@ -1,0 +1,62 @@
+#Saving Race {#save}
+
+Everything's finished, except editing and saving the page.
+
+In the previously created `edit.html` we have a form that has a textarea that
+acts as an input method for our wiki page's contents. We need to catch the data
+from the form and save it to the method. So once again we open again our
+`apps/wiki/views.php` and browse down to our `edit` view function, that
+currently looks like this:
+
+    <?php
+    ...
+    function edit(array $args) {
+      return _put_page_in_template($args['context']['page'], 'edit.html');
+    }
+    ...
+
+Let's add an `if`-clause that catches the POSTed form and saves or updates the
+wiki page, depending on whether the page is new, or pre-existing.
+
+    <?php
+    ...
+    function edit(array $args) {
+      $title = $args['context']['page'];
+      
+      if (isset($_POST['body']) {
+        $pageObject = _get_page_by_title($title);
+        $pageObject->body = $_POST['body'];
+        $pageObject->save();
+        
+        $response = new Response();
+        $response->redirect('..');
+        return $response;
+      } 
+      
+      else {
+        return _put_page_in_template($title, 'edit.html');
+      }
+    }
+
+We re-use the previously constructed `_get_page_by_title()` auxiliary method,
+which returns either a new `WikiPage`, if the title doesn't match an existing
+article, or, if a match is found, it is retrieved instead.
+
+Once everything is saved and done, we redirect the browser one directory up,
+i.e. out of the edit-page, and back to the original article.
+
+#Closing Words {#closure}
+
+The project is now complete. It is fully functioning with all its page
+renderings, etc. **But the software is not production ready!** With a little
+tinkering, you'll soon notice that this application has several bugs, if you
+will, and behavior that aren't expected from a real wiki application. Not to
+mention all the features that aren't implemented.
+
+This tutorial was provided just for illustratory purposes. Its job was to show
+how a project could be constructed from scratch. But more importantly, it shows
+how LightFrame feels and behaves. What it looks like, to work with LightFrame.
+
+Feel free to copy the code, tweak it and do whatever you want with it. Sure, if
+you insist, feel free to use it for commercial purposes. But you _really,
+really_ shouldn't.
