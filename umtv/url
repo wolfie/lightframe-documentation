@@ -1,0 +1,100 @@
+# The URL Dispatcher {#urldispatcher}
+
+Each project has at least one URL dispatcher. Each file is called
+`urls.php`, and the project's main dispatcher is placed at the project's
+root.
+
+The purpose of `urls.php` is onefold and, in principle, very simple:
+define which URLs the LightFrame project knows how to handle, and tell
+the project which View will handle each URL. There's only one function
+that's involved in this, although there may be several invocations of
+the same function.
+
+See ticket [#174](http://www.assembla.com/spaces/lightframe/tickets/174) for upcoming changes in the arguments of `addURL()`.
+
+# `addURL` {#addURL}
+
+Register an URL to be handled.
+
+> void addURL ( string _$pattern_ , string _$view_ [, mixed _$arguments_ ] )
+
+Associates a regular expression for a view to handle, optionally passing
+explicit arguments to the view.
+
+## Arguments {#addURLarg}
+
+### `$pattern` {#addURLarg_pattern}
+
+A [`preg_match()`](http://php.net/preg_match)-like regular expression,
+without the modifiers and start/end delimiters. If _$pattern_ is matched
+at after the script's root address, the view at _$view_ will be run. Any
+named expressions are sent to the view's argument, in the array key
+"`context`".
+
+### `$view` {#addURLarg_view}
+
+A forward-slash ("`/`") separated path to the view that is to be run, if
+_$pattern_ is matched in the URL. The path is relative to
+`LF_APPS_PATH`, the last part being the view function's name, that
+exists in the target `views.php`. `"foo/bar"` would invoke the function
+`bar()` at `LF_APPS_PATH/foo/views.php`.
+
+Instead of 
+
+### `$arguments` {#addURLarg_arguments}
+
+An optional array that contains any arguments that will be passed as-is
+to the view's argument array, merged with any matches from _$pattern_.
+
+If, on the other hand, _$pattern_ is the string "forward" (without the
+quotes), the url handler is sent to a new `urls.php`, located at the
+application, defined in _$view_. What has been matched in the URL thus
+far, is removed, and passed on.
+
+## Examples {#addURLex}
+
+All examples assume that the project is deployed at `http://example.com/`.
+
+### Simple {#addURLex_simple}
+
+    addURL( '^dir/$', 'myapp/viewfunc' );
+
+Matches the URL `http://example.com/dir/`, which executes the function
+`viewfunc()` in file `LF_APPS_DIR/myapp/views.php`.
+
+### URL Argument {#addURLex_argument}
+
+    addURL( '^(?P<url>.*)$', 'myapp/variable', array( 'arg' => true) );
+
+This matches any URL and sends a context argument with the key '_arg_'
+and boolean value `true`. For example, if the visitor visits the URL
+`http://example.com/anything/goes/`, the view _myapp/variable_ gets as
+arguments the values `['url'] => 'anything/goes/'` and
+`['context']['arg'] => true`.
+
+### Forward {#addURLex_forward}
+
+    // at project root's urls.php
+    addURL( '^blog/', 'blogapp', 'forward' );
+    
+    // at apps/blogapp/urls.php
+    addURL( '^post/(?P<num>[0-9]+)/', 'post' );
+
+If the visitor used the URL `http://example.com/blog/post/0/`, the
+handling would be forwarded to the `urls.php` at
+`LF_APPS_PATH/blogapp/urls.php`. The "blog/"-part of the URL is
+stripped, so what the forwarded-to dispatcher needs to parse, is the
+part beginning with "post".
+
+In this case, the view _blogapp/post_ would handle the URL.
+
+### Gotcha {#addURLex_gotcha}
+
+    <?php
+    addURL( '^(?<url>.*)$', 'myapp/variable' );
+    addURL( '^dir/$', 'myapp/viewfunc' );
+
+The view _myapp/viewfunc_ will never be called, because the first
+pattern will always match any URL visited, thus everything will always
+be handled by _myapp/variable_. URLs are matched in the same order as
+they are written.
