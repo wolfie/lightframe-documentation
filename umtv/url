@@ -10,7 +10,8 @@ the project which View will handle each URL. There's only one function
 that's involved in this, although there may be several invocations of
 the same function.
 
-See ticket [#174](http://www.assembla.com/spaces/lightframe/tickets/174) for upcoming changes in the arguments of `addURL()`.
+See ticket [#174](http://www.assembla.com/spaces/lightframe/tickets/174)
+for planned changes in `addURL()`.
 
 # `addURL` {#addURL}
 
@@ -39,7 +40,8 @@ _$pattern_ is matched in the URL. The path is relative to
 exists in the target `views.php`. `"foo/bar"` would invoke the function
 `bar()` at `LF_APPS_PATH/foo/views.php`.
 
-Instead of 
+If _$arguments_ is the string "forward", _$view_ should denote the path
+of the forwarded-to `urls.php` file in the `LF_APPS_PATH` directory.
 
 ### `$arguments` {#addURLarg_arguments}
 
@@ -69,8 +71,8 @@ Matches the URL `http://example.com/dir/`, which executes the function
 This matches any URL and sends a context argument with the key '_arg_'
 and boolean value `true`. For example, if the visitor visits the URL
 `http://example.com/anything/goes/`, the view _myapp/variable_ gets as
-arguments the values `['url'] => 'anything/goes/'` and
-`['context']['arg'] => true`.
+arguments the values `[url] => "anything/goes/"` and `[context][arg] =>
+true`.
 
 ### Forward {#addURLex_forward}
 
