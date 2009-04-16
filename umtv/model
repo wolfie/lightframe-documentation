@@ -1,1 +1,138 @@
-    //incomplete
+#The Model {#intro}
+
+The models represent the data that you interact with. In a billing
+system, you would probably have models at least for customers and bills.
+In a forums system, you'd probably have a model for posts.
+
+LightFrame's models provide an automatic way of storing and retrieving
+stuff to and from an SQL database. The database access is divided into
+two classes, "`Model`" and "`Entries`".
+
+# Model class {#model}
+
+A Model represents a single object's state - for example one particular
+user in a system. An Entries, on the other hand, represents a bunch of
+Models.
+
+Models should be defined in an application's directory, alongside the
+`views.php` file, in a file called `models.php`. This file, however,
+isn't autoloaded in any way (see ticket
+[#172](http://www.assembla.com/spaces/lightframe/tickets/172)), so you
+need to manually include them into your `views.php`.
+
+Models should currently be treated as having a per-application scope.
+Project scope is currently poorly tested (see ticket [#175](http://www.assembla.com/spaces/lightframe/tickets/175).)
+
+Models are defined by creating a new class that extends LightFrame's
+abstract Model class. A Model contains `Field`s, that act just as
+properties of an object (but, strictly speaking, aren't. For any
+practical reasons, however, you may consider them as properties.)
+
+## Example on Usage {#modelex}
+
+    <?php
+    ...
+    /** An example of how a Model is defined. */
+    class User extends Model {
+
+      public function __construct() {
+
+        // Fields are defined inside the constructor, rather than outside.
+        $this->name = new TextField();
+        $this->age = new IntField();
+      }
+
+      public function __toString() {
+        return (string) $this->name;
+      }
+    }
+    ...
+
+_Note:_ Fields are explained in a chapter of their own.
+
+Instantiating a model class works just as you would a normal PHP object.
+You use and manipulate the object's fields just as you would normally do
+with objects.
+
+    <?php
+    ...
+    $user = new User();
+    $user->name = "John Doe";
+    $user->age = 21;
+    ...
+
+## `save` {#model_save}
+
+> void Model::save ( void )
+
+Saves the state a Model object is in to the database. A new record is
+created, if the object is new, otherwise the old entry is updated.
+
+### Example {#model_save_example}
+
+    <?php
+    ...
+    $model = new User();
+    $model->name = 'John';
+    $model->save();
+    ...
+
+## `load` {#model_load}
+
+> void Model::load ( int _$id_ )
+
+Initialize the Model-object from the database. If the Model contains
+previous information, it will be overwritten. If the requested data
+isn't found in the database, this method does nothing.
+
+### int _$id_ {#model_load_arg_id}
+
+The _id_ (surrogate key) of the previously saved Model that will be
+initialized.
+
+### Example {#model_load_example}
+
+    <?php
+    ...
+    $model = new User();
+    $model->load(42);
+    echo $model->name; // "John"
+    ...
+
+## `delete` {#model_delete}
+
+> void Model::delete( [ bool _$forceBlindDelete_ = false ] )
+
+Remove the current model object from the database and [clear](#model_clear)
+the data from the object. If the model isn't in the database, this method
+does nothing.
+
+### bool _$forceBlindDelete_ {#model_delete_arg_force}
+
+An optional boolean argument. If `true`, the method skips the check
+whether the data has been saved into or retrieved from the database, and
+blindly deletes a record from the database, according to the object's
+id.
+
+Using this argument is advised against, and is considered deprecated.
+
+### Example {#model_delete_ex}
+
+    <?php
+    ...
+    $model = new User();
+    $model->load(42); // queries the User 42 from the database
+    $model->delete();
+
+    /* Although valid, the following should NOT be used: */
+    $model->id = 1; // assigns an explicit id, but doesn't
+                    // retrieve anything from database.
+    $model->delete(true); // blindly deletes the User 1 from database.
+    ...
+
+## `clear` {#model_clear}
+## `merge` {#model_merge}
+
+# Entries {#entries}
+
+## `keep_where_`... {#entries_keep}
