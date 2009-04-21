@@ -231,7 +231,7 @@ keywords are explained in the Fields-chapter in more detail.
 The basic syntax of the method is "keep_where_" + model's field + "__" +
 comparison info.
 
-### Basic Comparators
+### Basic Comparators {#entries_keep_comparators}
 
 Many fields support the basic comparators:
 
@@ -250,8 +250,8 @@ Many fields support the basic comparators:
     $users = new Entries('User');
     $users->keep_where_name__is('John');
     $users->keep_where_age__greater_than(20);
-    /* 
-     * Now $users represents only the User-models that have 
+    /*
+     * Now $users represents only the User-models that have
      * the name "John" and have an age over 20. But the
      * database has never been touched.
      */
