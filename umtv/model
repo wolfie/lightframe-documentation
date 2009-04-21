@@ -14,9 +14,10 @@ A Model represents a single object's state - for example one particular
 user in a system. An Entries, on the other hand, represents a bunch of
 Models.
 
-Models should be defined in an application's directory, alongside the
-`views.php` file, in a file called `models.php`. This file, however,
-isn't autoloaded in any way (see ticket
+Models should be defined in an application's directory by creating
+classes that extend LightFrame's `Model` class. They should be defined
+alongside the `views.php` file, in a file called `models.php`. This
+file, however, isn't autoloaded in any way (see ticket
 [#172](http://www.assembla.com/spaces/lightframe/tickets/172)), so you
 need to manually include them into your `views.php`.
 
@@ -101,7 +102,7 @@ initialized.
 
 ## `delete` {#model_delete}
 
-> void Model::delete( [ bool _$forceBlindDelete_ = false ] )
+> void Model::delete ( [ bool _$forceBlindDelete_ = false ] )
 
 Remove the current model object from the database and [clear](#model_clear)
 the data from the object. If the model isn't in the database, this method
@@ -114,7 +115,7 @@ whether the data has been saved into or retrieved from the database, and
 blindly deletes a record from the database, according to the object's
 id.
 
-Using this argument is advised against, and is considered deprecated.
+**Using this argument is advised against, and is considered deprecated.**
 
 ### Example {#model_delete_ex}
 
@@ -131,8 +132,134 @@ Using this argument is advised against, and is considered deprecated.
     ...
 
 ## `clear` {#model_clear}
+
+> void Model::clear ( _void_ )
+
+Destroys all data inside the object, and renders the object instance unusable, without affecting the stored instance.
+
+### Example {#model_clear_ex}
+
+    <?php
+    ...
+    $model = new User();
+    echo $model->name; // empty string
+    
+    $model->load(41);
+    echo $model->name; // "Jane"
+    
+    $model->clear();
+    echo $model->name; // throws a LightFrameException
+    ...
+
 ## `merge` {#model_merge}
+
+> void Model::merge ( _void_ )
+
+Merge the current object's data from the database, so that the object's
+data is overwritten by the saved ones.
+
+### Example {#model_merge_ex}
+
+    <?php
+    ...
+    $model = new User();
+    
+    $model->load(41);
+    echo $model->name; // "Jane"
+    
+    $model->name = 'John';
+    echo $model->name; // "John"
+    
+    $model->merge();
+    echo $model->name; // "Jane"
+    ...
 
 # Entries {#entries}
 
+Using an Entries-object is the only way to retrieve several Models out
+of the database at once. Even though it really is an object, you can and
+should use it just like you would use a native PHP array. It won't fool
+[`is_array()`](http://php.net/is_array/) or
+[`is_object()`](http://php.net/is_object) tests, however, and can be
+used as expected with the `instanceof` operator (i.e. `new Entries
+instanceof Entries` evaluates to `true`). No
+[`array_*`](http://php.net/manual/en/ref.array.php)-functions will work
+on it, either.
+
+The Entries is lazily evaluated. This means, as long as you define the
+shape and filters for the data you want to remain, the database is
+untouched, and everything happens snappily and fast. But, the moment you
+need something from the database, only then will the database be asked
+of data.
+
+In practice, you could have an Entries object represent millions of
+database records without breaking a sweat. But, once you try to retrieve
+even one amongst those millions of records, the database will be visited
+and asked for results.
+
+## Constructor {#entries_constructor}
+
+> Entries::__construct ( string _$model_ )
+
+Create a new Entries containing models of type _model_. The argument is
+required and must be a valid name of a model class or a
+LightFrameException will be thrown.
+
+By default, the newly created Entries object represents all existing
+models in the database, but no models are retrieved from the database.
+
+### Example {#entries_constructor_ex}
+
+    <?php
+    ...
+    $users = new Entries('User');
+    echo count($users);  // "123"
+    
+    $user = $users[100];
+    echo $user->name     // "Jenny"
+    ...
+
 ## `keep_where_`... {#entries_keep}
+
+> void Entries::keep_where_&hellip; ( mixed _$criteria_&hellip; )
+
+Narrow down the objects represented by Entries. This is a dynamic method
+that has a structure depending on the used Model. Despite of not having
+a predefined syntax, it does make use of some keywords. The exact
+keywords are explained in the Fields-chapter in more detail.
+
+The basic syntax of the method is "keep_where_" + model's field + "__" +
+comparison info.
+
+### Basic Comparators
+
+Many fields support the basic comparators:
+
+ - eq, is, equals, equal_to, equals_to
+ - neq, is_not, not_equal
+ - gt, greater, greater_than
+ - gteq, greater_or_equals, greater_or_equal_to, greater_than_or_equals, greater_than_or_equal_to
+ - lt, less, less_than
+ - lteq, less_or_equals, less_or_equal_to, less_than_or_equals, less_than_or_equal_to
+ - between, is_between
+
+### Example {#entries_keep_ex1}
+
+    <?php
+    ...
+    $users = new Entries('User');
+    $users->keep_where_name__is('John');
+    $users->keep_where_age__greater_than(20);
+    /* 
+     * Now $users represents only the User-models that have 
+     * the name "John" and have an age over 20. But the
+     * database has never been touched.
+     */
+     
+    // This next line will access the database
+    if (count($users) > 0) {
+      echo "A John older than 20 was found!";
+    } else {
+      echo "No suitable Johns found";
+    }
+    ...
