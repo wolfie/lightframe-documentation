@@ -181,21 +181,17 @@ of the database at once. Even though it really is an object, you can and
 should use it just like you would use a native PHP array. It won't fool
 [`is_array()`](http://php.net/is_array/) or
 [`is_object()`](http://php.net/is_object) tests, however, and can be
-used as expected with the `instanceof` operator (i.e. `new Entries
-instanceof Entries` evaluates to `true`). No
-[`array_*`](http://php.net/manual/en/ref.array.php)-functions will work
-on it, either.
+used as expected with the `instanceof` operator (i.e. "`new Entries
+instanceof Entries`" evaluates to `true`). No
+[`array_*`](http://php.net/manual/en/ref.array.php)-functions will treat
+it as an array, either.
 
-The Entries is lazily evaluated. This means, as long as you define the
-shape and filters for the data you want to remain, the database is
-untouched, and everything happens snappily and fast. But, the moment you
-need something from the database, only then will the database be asked
-of data.
-
-In practice, you could have an Entries object represent millions of
-database records without breaking a sweat. But, once you try to retrieve
-even one amongst those millions of records, the database will be visited
-and asked for results.
+The Entries is lazily evaluated. This means, that the database is
+queried at the soonest possible moment, with the least amount of data
+required. In practice, you could have an Entries object represent
+millions of database records without breaking a sweat. But, once you try
+to retrieve even one amongst those millions of records, the database
+will be visited and asked for results.
 
 ## Constructor {#entries_constructor}
 
