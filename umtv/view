@@ -1,1 +1,80 @@
-    //incomplete
+A view in LightFrame is a user defined function that gathers and
+processes data (via Models, for example) and, most often, transforms it
+into chunk sized presentable bits for the Template to render.
+
+The view function has a simple contract: it needs to accept arguments,
+and it needs to return a Response-object. What happens in between is up
+to you.
+
+The specifics of the Response class is described in its own chapter.
+
+# Creating a View {#creating}
+While, technically, a view is nothing more than a function with two
+requirements, a view has a specific role it needs to fulfill: it gets
+input from the environment (say, the browser), it manipulates data (say,
+from models) and it dictates what will be displayed to the visitor. Do
+note, that the views say _what_ is displayed, not _how_. That's the
+templates' job, which is described in a chapter on its own.
+
+View functions are placed in an application's `views.php`-file, and a
+view is often referred in an "myapplication/myview"-notation, which in
+practice translates to "the function `myview()` in the file
+`myapplicaion/views.php`".
+
+## Simple View {#creating_simple}
+
+Here's an example of a very simple view:
+
+    <?php
+    function simple_view($args) {
+      $response = new Response();
+      $response->template = $args['template'];
+      return $response;
+    }
+
+This is a valid view: it accepts arguments and it returns a Response
+object. The arguments are passed from the URL dispatcher, either
+explicitly, or parsed from the visited URL. You probably wouldn't want
+to write this exact view, because LightFrame comes with a [built-in
+view](#builtins) that does just this.
+
+## Throw In the Context and Models {#creating_actual}
+
+More often than not, your views include some more complex information
+than just picking and choosing a template and render it as-is. You will
+probably use database information, do some operations, and want to
+display their results to the visitor.
+
+    <?php
+    require_once 'models.php';
+    
+    function more_advanced_view($args) {
+      $books = new Entries('Book');
+      $user  = new User();
+      $user->load($args['userid']);
+      
+      $books_total         = count($books);
+      $books_read_fraction = $user->books_read / $books_total;
+      $books_read_percent  = round($read_books_fraction * 100, 2);
+      
+      $response = new Response();
+      $response->template = 'status.html';
+      $response->context  = array(
+        'books_total'        => $books_total,
+        'books_read_percent' => $books_read_percent,
+        'books_read'         => $user->books_read
+      );
+      
+      return $response;
+    }
+
+This view calculates the total amount of books in the system, the
+percentage of how many books within the system a user has read, and
+amount of books read. The view then passes this information onwards to a
+status template.
+
+You are, naturally, not limited into writing all your logic inside one
+complete function, but are allowed to call functions and create objects.
+In fact, high [cohesion][wikipedia_cohesion] is encouraged.
+
+[wikipedia_cohesion]: http://en.wikipedia.org/wiki/Cohesion_(computer_science)

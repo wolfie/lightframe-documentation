@@ -8,7 +8,7 @@ LightFrame's models provide an automatic way of storing and retrieving
 stuff to and from an SQL database. The database access is divided into
 two classes, "`Model`" and "`Entries`".
 
-# Model class {#model}
+# Model Class {#model}
 
 A Model represents a single object's state - for example one particular
 user in a system. An Entries, on the other hand, represents a bunch of
@@ -28,6 +28,11 @@ Models are defined by creating a new class that extends LightFrame's
 abstract Model class. A Model contains `Field`s, that act just as
 properties of an object (but, strictly speaking, aren't. For any
 practical reasons, however, you may consider them as properties.)
+
+Model classes should be named a real-world noun in the singular form;
+_Component_, _City_ and _Exterminator_ are all good model names, while
+_Runners_, _Steering_ and _Complex_ probably aren't the best choices
+around.
 
 ## Example on Usage {#modelex}
 

@@ -1,0 +1,68 @@
+LightFrame comes with several built-in views. They are called just like
+any other view would be called. They are "fallback views", which means,
+if the current project doesn't have a view with the same name, the
+built-in version will be called. It means also the reverse: if you
+implement a view with the same name as a built-in, your view takes
+precedence, so you can't access the built-in.
+
+# `basic/passfile` {#basic_passfile}
+
+Send a file to the browser. Note: the server needs to have read access
+to the target file, or it can't be passed.
+
+## Argument: dir {#basic_passfile_dir}
+
+The directory in which the file resides. This argument can optionally be
+passed in the argument's `context`-array with the `dir` key. Omit the
+trailing slash.
+
+## Argument: file {#basic_passfile_file}
+
+The file's actual name. This argument can optionally be passed in the
+argument's `context` array with the `file` key. The _file_ argument
+cannot contain the characters `..` nor `/`, or an Exception is thrown,
+for security purposes.
+
+## Example {#basic_passfile_example}
+
+    addURL( '^media/(?P<file>[^/]+)$', 'basic/passfile',
+      array( 'dir' => '/path/to/media/files' )
+    );
+
+# `basic/redirect` {#basic_redirect}
+
+Redirect the visitor to another page. This is done with the [HTTP
+303][wikipedia303] header.
+
+[wikipedia303]: http://en.wikipedia.org/wiki/HTTP_303
+
+## Argument: url {#basic_redirect_url}
+
+The URL to which the visitor will be redirected.
+
+## Example {#basic_redirect_example}
+
+    addURL( '^i_disagree_with_you$', 'basic/redirect',
+      array( 'url' => 'http://google.com' )
+    );
+
+# `basic/show` {#basic_show}
+
+Show a template.
+
+## Argument: template {#basic_show_template}
+
+The template's filename that will be shown as a string. If the argument
+isn't given an Exception will be thrown.
+
+## Argument: context {#basic_show_context}
+
+The array in the argument's `context` key are passed into the
+template, including the results from the URL matching.
+
+## Example {#basic_show_example}
+
+    addURL ( $url, 'basic/show', array(
+      'template' => 'template.html',
+      'context'  => array('message' => 'Hello World!')
+    ));
