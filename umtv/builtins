@@ -1,3 +1,5 @@
+# The Built-ins {#builtin}
+
 LightFrame comes with several built-in views. They are called just like
 any other view would be called. They are "fallback views", which means,
 if the current project doesn't have a view with the same name, the

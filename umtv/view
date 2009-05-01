@@ -1,3 +1,5 @@
+# Views {#views}
+
 A view in LightFrame is a user defined function that gathers and
 processes data (via Models, for example) and, most often, transforms it
 into chunk sized presentable bits for the Template to render.
