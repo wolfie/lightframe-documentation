@@ -1,1 +1,87 @@
-    // todo
+# Fields {#field}
+
+Fields are used instead of classic member variables in Model classes,
+but, in most cases, they should be treated and used as public member
+variables.
+
+# Using Fields {#using}
+
+Unlike traditional member variables in PHP, a class' fields are not
+defined in the class body, but in the constructor:
+
+    <?php
+    class MyModel extends Model {
+      public $my_field = new TextField();  // WRONG!
+        
+      public function __construct() {
+        $this->my_field = new TextField(); // correct.
+      }
+    }
+
+Otherwise, the fields behave and can be set and read just like an
+object's public members. Unlike PHP's traditional member variables,
+fields are [strongly typed](http://en.wikipedia.org/wiki/Strong_typing):
+
+    <?php
+    ...
+    $model = new MyModel();
+    $model->my_field = "five"; // a valid string.
+
+    $model->my_field = 5;      // invalid; a TextField only handles strings. An
+                               // exception will be thrown.
+                               
+# Available Fields {#available}
+
+There are some fields that you can use. Today, they are only three, but
+you can get reasonably far with only them.
+
+## TextField {#available_text}
+
+    <?php
+    ...
+    class TextModel extends Model {
+      public function __construct() {
+        $this->text = new TextField();
+      }
+    }
+    ...
+    $model = new TextModel();
+    $model->text = "some text";
+    $model->text .= " foo";
+    echo $model->text; // outputs "some text foo"
+
+## IntField {#available_int}
+
+    <?php
+    ...
+    class IntModel extends Model {
+      public function __construct() {
+        $this->int = new IntField();
+      }
+    }
+    ...
+    $model = new IntModel();
+    $model->int = 10;
+    $model->int++;
+    echo $model->int; // outputs the number 11
+  
+## ManyToOneField {#available_mto}
+
+You need to provide a valid model class' name as a string as an argument
+to the constructor.
+
+    <?php
+    ...
+    class ReferModel extends Model {
+      public function __construct() {
+        $this->model = new ManyToOneField('IntModel');
+      }
+    }
+    ...
+    $refer_model = new ReferModel();
+    $int_model = new IntModel();
+    
+    $int_model->int = 1;
+    $refer_model->model = $int_model;
+
+    echo $refer_model->model->int; // outputs the number 1
