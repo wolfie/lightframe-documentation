@@ -13,7 +13,7 @@ the same function.
 See ticket [#174](http://www.assembla.com/spaces/lightframe/tickets/174)
 for planned changes in `addURL()`.
 
-# `addURL` {#addURL}
+# addURL {#addURL}
 
 Register an URL to be handled.
 

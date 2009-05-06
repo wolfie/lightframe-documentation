@@ -1,1 +1,88 @@
-    // TODO
+#Tags {#tags}
+
+A tag's function is to add some presentational logic to the
+otherwise-so-static HTML markup. Tags operate on either on themselves
+(and their arguments) or on a body of text that's located between the
+start tag and end tag.
+
+#Syntax {#syntax}
+
+    {% tag parameter1:value1 parameter2 %}
+      Foo
+      Bar
+    {% endtag %}
+
+This is how tags are used in the generic sense. Some tags accept a
+parameter or another. In the example we have both a named parameter and
+an positional parameter.
+
+An actual tag rarely uses both named and positional parameters.
+
+## Named Parameters {#syntax_namedparam}
+
+A named parameter is passed by the parameter's name together with its
+argument value, separated by colon ("`:`"). The order between named
+parameters don't matter, because they are identified by the parameter
+name, instead of their order.
+
+The "`parameter1:value1`" part in the example above represents a named
+parameter. It has the name "parameter1" and its argument, "value1", which
+is a context variable in this case. (String literals would be quoted by
+either single or double quotes &ndash; see below.)
+
+## Positional Parameters {#syntax_posparam}
+
+A positional parameter doesn't have a name associated to itself, and is
+identified only by its position amongst the other parameters. It is
+rare, however, for tags to accept more than one positional parameter. If
+a tag accepts several parameters, they're usually named parameters
+instead.
+
+The "`value2`" part in the example above is a positional parameter,
+because it doesn't have a parameter name suffixed to it.
+
+## Argument Passing {#syntax_argpass}
+
+The passed values can be a context variable, an integer literal, or a
+string literal, shown respectively below: 
+
+    {% tag variable %}
+    {% tag 42 %}
+    {% tag "foo" %} or {% tag 'foo' %}
+    
+# Block and Extends {#block_extends}
+
+Extend another template.
+
+    {% extends "base.html" %}
+    
+    {% block body %}
+    	<h1>Hello body</h1>
+    {% endblock %}
+
+The two tags "block" and "extends" make templates really powerful and
+reusable. In the example above, we extend the template `base.html`, and
+fill its "body" block with the HTML "`<h1>Hello body</h1>`".
+
+The extends tag requires one and only one parameter
+
+_Note:_ the extends-tag must be the absolutely first thing in the
+template that extends another template, otherwise it won't work.
+
+# Available Tags {#tags}
+
+## Comment {#tags_comment}
+
+## Count {#tags_count}
+
+## Debug {#tags_debug}
+
+## Foreach {#tags_foreach}
+
+## If {#tags_if}
+
+## Lowercase {#tags_lowercase}
+
+## Uppercase {#tags_uppercase}
+
+## Verbatim {#tags_verbatim}

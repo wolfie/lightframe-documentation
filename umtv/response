@@ -1,1 +1,118 @@
-// todo
+#Respone {#response}
+
+The Response object describes LightFrame what you actually want to show
+to your visitor. Therefore, one of a view function's obligations is to
+return a Response object, because else LightFrame wouldn't know what to
+do next.
+
+You can't, however, return a 'blank' response. It has to have some
+content, or you'll get an exception.
+
+Most often you would simply give a template and a context with the
+response and get on with it. And, actually, that's the only thing you
+need to do most of the time. But, for those times, when that's simply
+not enough, you're given some extra control on what's returned to the
+browser.
+
+# Constructors {#constructors}
+
+The constructor of the Response object is overloaded with three
+different variations. (See also ticket
+[#177](http://www.assembla.com/spaces/lightframe/tickets/177))
+
+> Response::__construct ( _void_ )
+    
+This returns a vanilla response, with nothing in it. While you can
+construct it this way, you can't return it like this, because it doesn't
+help LightFrame in deciding what to show the visitor. We'll get into the
+details in a bit.
+
+> Response::__construct ( string _$body_ )
+
+What you give is what's shown. The _body_ is the raw HTML that will be
+piped through to to your visitor. You can return this response just
+fine, but probably something you'll use pretty rarely, if you don't
+decide to use a third party templating system, that is.
+
+Using this constructor is equivalent to creating a blank Response, and
+then calling [`add()`](#methods_add) separately.
+
+> Response::__construct ( string _$template_file_ [, array _$context_] )
+
+The _template_file_ is the file of a desired template, the _context_
+array is the context you want to give to the template. The _context_ is
+optional, though. 
+
+Using this constructor is equivalent to creating a blank Response, and
+then calling [`template()`](#methods_template) and
+[`context()`](#methods_context) separately.
+
+# Methods {#methods}
+
+Now that you have a Response at your hands, there's stuff you can do
+with it to get that extra control on what LightFrame actually tells the
+browser.
+
+## add {#methods_add}
+
+Add HTML to the response body.
+
+> void Response::add ( string _$string_ )
+
+You can build the HTML body by adding snips of HTML with this method.
+_string_ is appended to the end of the previusly defined HTML body. (See
+also ticket
+[#183](http://www.assembla.com/spaces/lightframe/tickets/183).)
+
+_Note:_ An exception will be thrown if you have previously called
+[`redirect()`](#methods_redirect).
+
+## context {#methods_context}
+
+Define a template's context.
+
+> array Response::context ( [array _$context_] )
+
+Get the currently defined context in the response. If the optional
+_context_ argument is given, it is associated with the template in the
+response instead of a previously defined context. (See also ticket
+[#185](http://www.assembla.com/spaces/lightframe/tickets/185).)
+
+_Note:_ An exception will be thrown if you define a new context and you
+have previously called [`redirect()`](#methods_redirect).
+
+## redirect {#methods_redirect}
+
+Redirect the user somewhere else.
+
+> void Response::redirect ( string _$URL_ )
+
+Using this method, the browser is redirected to _URL_. A previously set
+HTML body, template or context will be cleared, and trying to set them
+after this method has been invoked will result in an exception.
+
+## reset {#methods_reset}
+
+Clear the HTML body
+
+> void Response::reset ( _void_ )
+
+Empty the HTML body that has been built thus far. (See also ticket
+[#183](http://www.assembla.com/spaces/lightframe/tickets/183).)
+
+_Note:_ An exception will be thrown if you have previously called
+[`redirect()`](#methods_redirect).
+
+## template {#methods_template}
+
+> string Response::template ( [string _$template_file_] )
+
+Get the currently set template filename. If the optional _template_file_
+is set, set it as the template file and replace a previously set
+template file.
+
+The evaluation of the _template_file_'s location is described in detail
+in the Template-chapter.
+
+_Note:_ An exception will be thrown if you have previously called
+[`redirect()`](#methods_redirect).

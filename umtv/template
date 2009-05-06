@@ -1,1 +1,203 @@
-    //incomplete
+# Template {#template}
+
+A template is a plain old HTML file extended with a handy templating
+markup. Its function is to display the information the View has come up
+with. You could think that templates are to views what CSS is to HTML.
+Actually, I guess a more fair comparison would be to
+[XSLT](http://en.wikipedia.org/wiki/XSLT) and XML, but not as messy and
+enterprisey.
+
+The template language consists of three concepts:
+
+  - Comments, `{# comment #}`
+  - Variables, `{{ variable }}`
+  - Tags, `{% tag %}`
+  
+While PHP would work as a templating language all by itself, the thought
+here is to maintain a more strict limitation into what you can do within
+a template. The template language in LightFrame is designed to contain
+only presentational logic, to give you a bit more life to your data and
+numbers, but not too much.
+
+With PHP, you could do all kinds of magic within the template. Actually,
+you could get rid of views entirely, if you'd want to, but then you'd
+probably be better off without LightFrame to start with. The whole point
+with frameworks like LightFrame is to separate [business
+logic](http://en.wikipedia.org/wiki/Business_logic) from [presentation
+logic](http://en.wikipedia.org/wiki/Presentation_logic).
+
+## Comments {#template_comments}
+
+    {% this is a comment %}
+
+A comment is just like what you'd expect - a piece of text that will not
+be displayed in the resulting HTML. Unlike the HTML comment ("`<!--
+-->`"), these comments are not displayed even in the HTML source.
+
+Comments are restricted to only one line, and cannot span several lines
+of HTML. There is, however, a [tag](#template_tags) that does just this.
+
+The first thing LightFrame does to a template, is stripping the comments
+away.
+
+## Variables {#template_variables}
+
+    {{ a_variable|with|some:filters }}
+
+A variable displays a value from the template's context. If the context
+doesn't contain the variable, it displays nothing. These aren't
+explicitly error checked, so pay extra caution with regard to typos.
+
+Variables can be processed through filters, which are described in
+another chapter.
+
+The template gets all its variables evaluated next. The variable markup
+is removed, and are replaced by their values.
+
+### Richer Variables
+
+Sometimes you aren't satisfied by just simply outputing the variable
+directly. It's entirely valid to have an array or an object in your
+context. You probably want to access a certain index in your array, or a
+field in your model object.
+
+You can do this with the dot markup:
+
+    {{ array.1 }}
+    {{ model.name }}
+
+In the example above, assuming `array` is, in fact, an array, the
+element with the index 1 is displayed. Assuming that `model` is a model
+object that has a "name" field, it would be shown.
+
+Assume further, that `array` is an array of models. You could very well add more dot operators in succession:
+
+    {{ array.1.name }}
+
+If an array's index or a model's field (or an object's public member,
+for that matter) doesn't exist, an empty string will be shown.
+
+While you _can_ call an object's method too, there are some flags to be
+raised, here. First of all, the method can't be given any arguments, so
+the method shouldn't expect any, either. Also, running the method
+shouldn't alter any data anywhere - ever. Doing some calculations is
+fine, but doing anything more than that is frowned upon in an extremely
+disapproving manner.
+
+## Tags {#template_tags}
+
+The tags are categorized into three groups: block tags, complex tags and
+simple tags. Some tags can be given arguments. They work like [named
+parameters](wikipedia_np) and are passed in a "parameter:value" format.
+
+[wikipedia_np]: http://en.wikipedia.org/wiki/Named_parameter
+
+The last thing LightFrame does, is evaluates tags. They are evaluated
+from top to bottom. Since some tags can be nested, tags are usually
+evaluated from the most deeply nested tag back to the shallowest tag.
+
+This nesting behavior is left to the tags themselves, however. Don't
+rely on this rule-of-thumb blindly. A good example of this exception is
+the comment tag, which doesn't evaluate any tags at all.
+
+### Block Tags {#template_tags_block}
+
+    {% blocktag %}
+      HTML
+    {% endblocktag %}
+
+A block tag operates on the contents that between the start and end
+tags. A block tag's endtag is always called "end" plus the tag itself.
+So, for example, "`{% comment %}`" has the endtag "`{% endcomment %}`".
+
+### Complex Tags {#template_tags_complex}
+
+    {% complex %}
+      Something
+    {% middle %}
+      Else
+    {% endcomplex %}
+
+A complex tag is a block tag, with additional tags in between. A good
+example of a complex tag is the `if` tag. While the `if` does have an
+`endif` tag, it can also have an `elseif` and/or an `else` tag in
+between.
+
+### Simple Tags {#template_tags_simple}
+
+    {% simpletag %}
+
+A simple tag doesn't have an endtag. The difference between a variable
+and a simple tag (or any tag, for that matter) is that a variable is
+pre-calculated by the view function, while the tag gets evaluated on the
+spot.
+
+# Hunting for Templates {#hunting}
+
+If the given path to a template file starts with a "`/`", the file is
+sought only from the project's template path. If it doesn't start with a
+slash, these tree locations are tried, in the following order, until a
+template file is found:
+
+  - Relative to the current template
+  - Relative to the project's templates path
+  - Relative to the project's templates path, underneath the "LightFrame" directory.
+  - Relative to LightFrame's templates path
+  
+If all of them fail to find a suitable file, an error will be triggered.
+
+This means that you are allowed to override built-in templates with ease
+on a per-project basis. Let's say that you want to tweak the look of
+LightFrame's default HTTP 404-error template. You just copy the
+LightFrame's templates into your template directory's
+LightFrame-subdirectory:
+
+    $ mkdir -p /path/to/project/templates/LightFrame/http
+    $ cd /path/to/LightFrame/templates/http
+    $ cp http404.html base.html /path/to/project/templates/LightFrame/http
+
+(See also ticket [#187](http://www.assembla.com/spaces/lightframe/tickets/187).)
+
+# The Context {#context}
+
+Templates are often used together with a context. A context could be
+seen as a group of variables that can be used in, or displayed on, a
+template. One could see the context as a set of arguments to a template.
+
+Technically, a context is a plain ol' [associative
+array](http://php.net/array) in one dimension, with the desired variable
+name as the key, and its value as the key's value.
+
+    // a valid context
+    $context = array(
+      'user_age'  => 25,
+      'all_books' => new Entries('Book'),
+      'user_name' => $username
+    );
+
+An array becomes a context when it is used together with, or given to
+(depending on how you want to look at it), a template.
+
+# Example Template {#example}
+
+    <html>
+    
+      <head>
+        <title>{{ htmltitle|lowercase|capitalize }}</title>
+      </head>
+      
+      <body>
+      	<h1>Welcome!</h1>
+      	
+      	<ul>
+      	{% foreach menu_items:item %}
+      	  <li>{{ item.name }}</li>
+      	{% endforeach %}
+      	</ul>
+      </body>
+      
+    </html>
+    
+The above snippet would Title Case the title of the page, and iterate
+over an array (or an Entries) of menu items, displaying each item's name
+in an unordered list.
