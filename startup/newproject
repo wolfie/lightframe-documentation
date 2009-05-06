@@ -34,7 +34,7 @@ a new project:
 
     $ lf_setup.php startproject
     htaccess > /home/henrikpaul/public_html/testproject
-    ndex.php > /home/henrikpaul/public_html/testproject
+    index.php > /home/henrikpaul/public_html/testproject
     settings.php > /home/henrikpaul/public_html/testproject
     urls.php > /home/henrikpaul/public_html/testproject
 
