@@ -50,7 +50,9 @@ string literal, shown respectively below:
     {% tag 42 %}
     {% tag "foo" %} or {% tag 'foo' %}
     
-# Block and Extends {#block_extends}
+# Available Tags {#tags}
+
+## Block and Extends {#tags_block_extends}
 
 Extend another template.
 
@@ -64,25 +66,212 @@ The two tags "block" and "extends" make templates really powerful and
 reusable. In the example above, we extend the template `base.html`, and
 fill its "body" block with the HTML "`<h1>Hello body</h1>`".
 
-The extends tag requires one and only one parameter
+The extends tag requires one and only one parameter, which is the
+template that will be extended.
+
+When templates are extended, it's all about matching `block`-tags in the
+two templates involved. The extended template, i.e. the target of the
+`extends`-tag, has a bunch of named `block`-tags. Let's imagine that the
+`base.html` file that's referenced above looks like this:
+
+    <html>
+      <head>
+        <title>Test Template</title>
+      </head>
+      <body>
+        {% block body %}
+          <p>Default body.</p>
+        {% endblock %}
+      </body>
+    </html>
+    
+When the two templates above are combined, the result would be something
+like the following:
+
+    <html>
+      <head>
+        <title>Test Template</title>
+      </head>
+      <body>
+        <h1>Hello body</h1>
+      </body>
+    </html>
+
+Note that the body has the content from the extending template. 
+
+This isn't to say that templates that are designed to be extended
+couldn't be used on their own. Assuming that the `base.html` would be
+used by itself, the body would have the "Default body" text instead.
+
+Block tags are matched with their names, and the extending template
+overrides the default content of the extended template's blocks. If the
+extended template has blocks that aren't overriden, the default content
+is used. If the extending template has blocks that aren't found in the
+extended template, they simply disappear.
 
 _Note:_ the extends-tag must be the absolutely first thing in the
 template that extends another template, otherwise it won't work.
 
-# Available Tags {#tags}
+_Note:_ You can't nest block tags. They just doesn't work that way.
 
 ## Comment {#tags_comment}
 
+Mark text as comments.
+
+    {% comment %}
+      This text will never be shown in the browser. I can even have
+      {% illegal %} tags, because the contents within comments are never
+      evaluated.
+    {% endcomment %}
+
+This block tag is made to complement the `{# comment markup #}` that can span
+only one line in the template.
+
 ## Count {#tags_count}
+
+Display the size of an array or Entries.
+
+    {% count many_values "singular" "plural" %}
+    
+This simple tag accepts one or three positional arguments:
+
+  1. The context variable that will be measured.
+  2. A string that will be shown if the variable's size is 1.
+  3. A string that will be shown if the variable's size is more or less than 1.
+  
+So, take for example the following template:
+
+    {% count animals "ox" "oxen" %} in the barn.
+
+If the context variable `animals` would have only one element, this tag
+would result display "1 ox in the barn". But if it has more, then it
+would print, for example "99 oxen in the barn".
 
 ## Debug {#tags_debug}
 
+Display the value during runtime and halt.
+
+    {% debug my_var %}
+
+This simple tag is intended only for when you are trying to debug during
+development. This displays only the name and value of the argument and
+halts further execution. No other text is displayed from the template.
+
+    <h1>Hello</h1>
+    {% debug message %}
+    <p>{{ message }}</p>
+    
+The template above, when executed, could display something in the lines
+of:
+
+    "message":
+    string(5) "hello"
+    
+Note that the header tag or the paragraph message is not displayed.
+
 ## Foreach {#tags_foreach}
+
+Iterate over all elements.
+
+    {% foreach many_items:an_item %}
+      <p>{{ an_item }}
+    {% endforeach %}
+
+This block tag goes through all elements in the argument, assigns the
+element one-by-one into the given variable, which is usable within the
+foreach-block. 
+
+_Note:_ The use of parameters in the tag is not according to the general use of
+named parameter - it looks like a named parameter, while it's actually
+positional parameters in disguise. See ticket
+[#188](http://www.assembla.com/spaces/lightframe/tickets/188).
+
+_Note:_ The variable that is used for for the single items cannot be used in the
+context, or the tag will raise an error.
 
 ## If {#tags_if}
 
+Display content conditionally.
+
+### Simple If {#tags_if_simple}
+
+    {% if equals:this to:that %}
+      {{ this }} equals to {{ that }}!
+    {% endif %}
+
+### If-then-else {#tags_if_else}
+
+    {% if equals:this to:that %}
+      {{ this }} equals to {{ that }}!
+    {% else %}
+      Nope, they were not equal.
+    {% endif %}
+
+### If-then-elseif {#tags_if_elseif}
+
+    {% if equals:this to:that %}
+      {{ this }} equals to {{ that }}!
+    {% elseif greater:this than:that %}
+      {{ this }} is greater than {{ that }}
+    {% else %}
+      No tests matched...
+    {% endif %}
+    
+The `else` tag is, naturally, optional in this case. You can also chain
+as many `elseif`s after eachother as you want.
+
+### If Tests {#tags_if_test}
+
+  * istrue
+  * isfalse
+  * equals / to
+  * notequals / to
+  * isgreater / than
+  * isless / than
+  * exists
+  * empty
+  * notempty
+  
+All tests can be used in both the `if` tag and the `elseif` tag equally.
+
 ## Lowercase {#tags_lowercase}
+
+Turn a block to its lowercase representation
+
+    {% lowercase %}
+      HELLO? ANYONE HOME?! I'M NOT YELLING TOO LOUDLY, AM I? I'D REALLY
+      LIKE TO TALK WITH YOU!
+    {% endlowercase %}
+
+A block tag that turns its contents into lowercase characters.
+
+_Note:_ This tag isn't UTF-8 safe, so you should rely on only characters
+from A to Z to be turned into lower case. See ticket
+[#189](http://www.assembla.com/spaces/lightframe/tickets/189).
 
 ## Uppercase {#tags_uppercase}
 
+Turn a block to its uppercase representation
+
+    {% uppercase %}
+      ssh, let's whisper here, so that the guy above doesn't notice us.
+      he can be pretty annoying from time to time.
+    {% enduppercase %}
+    
+A block tag that turns its contents into uppercase characters.
+
+_Note:_ This tag isn't UTF-8 safe, so you should rely on only characters
+from A to Z to be turned into upper case. See ticket
+[#189](http://www.assembla.com/spaces/lightframe/tickets/189).
+
 ## Verbatim {#tags_verbatim}
+
+Display the contents verbatim.
+
+    // Since this manual is processed by LightFrame, 
+    // this example cannot be rendered.
+
+The `verbatim` block tag shows the contents in its block as-is, without parsing
+any template-related markup in between.
+
+_Note:_ You cannot display the `verbatim` tag inside a `verbatim` tag.
