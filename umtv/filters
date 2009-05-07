@@ -1,1 +1,121 @@
-    // TODO
+# Filters {#filter}
+
+A filter is a thing that changes the way a variable is presented. If it
+had to be given an enterprise-compatible terminology entity, it'd
+probably be called a transformational value operator.
+
+Filters can be chained to get additive changes. Everything is evaluated
+from left to right.
+
+## Syntax {#filter_syntax}
+
+A chain of filters look like this:
+
+    {{ variable|filter|another_filter }}
+    
+In the snippet above, `variable` would be evaluated first as a context
+variable, and it will be used as a starting value (or, would it have
+been a string/integer literal, it would've been the starting value).
+
+Lets say, that `variable` evaluated to the string "apple". The first
+filter could, as if by magic, assign a valid, random adjective to any
+starting noun. So, after evaluating the first filter, the value would be
+"red apple". Let's also say, that the second filter has magical powers,
+by transforming the input into something that could resemble an
+intuitive opposite. So, the end result could be "blue pear".
+
+In our example, we could've also written, and expected the same result,
+because filters can be applied directly on literals.
+
+    {{ "red apple"|another_filter }}
+
+Some filters can also accept arguments. They are passed with the colon-notation:
+
+    {{ variable|filter:argument|another_filter:another_argument }}
+
+# Existing Filters {#existing}
+
+LightFrame comes with a few filters. Here they are:
+
+## Capitalizefirst {#existing_capitalizefirst}
+
+Capitalize the first character.
+
+    {{ string|capitalizefirst }}
+
+Capitalizes the first character in a string. Note that if the string is
+in uppercase already, this filter will not convert anything to
+lowercase. 
+
+You might want to run your string through
+[lowercase](#existing_lowercase) first.
+
+## Capitalize {#existing_capitalize}
+
+Capitalize the first character in all words.
+
+    {{ string|capitalize }}
+
+Capitalize the first letter in all words in a string. Note that if the
+string is in uppercase already, this filter will not convert anything to
+lowercase.
+
+You might want to run your string through
+[lowercase](#existing_lowercase) first.
+
+## Default {#existing_default}
+
+Show a certain string, if there is no input.
+
+    {{ var|default:not found }}
+
+If the input value is `null`, `false`, an empty string, or 0, display
+the string in the argument.
+
+_Note:_ The argument string is unquoted. See ticket
+[#190](http://www.assembla.com/spaces/lightframe/tickets/190).
+
+## Lowercase {#existing_lowercase}
+
+Convert a string to lowercase.
+
+    {{ string|lowercase }}
+    
+## Safe {#existing_safe}
+
+Mark a HTML-string as safe.
+
+    {{ string|safe }}
+
+Since LightFrame automatically escapes any possible HTML-characters, for
+security reasons, you cannot give HTML to be shown to a template, by
+default. By marking a string as `safe`, you tell LightFrame to render
+the string as raw HTML, nevertheless.
+
+_Note:_ Be absolutely sure that you want to show the HTML. You should
+always verify and/or sanitize the value in the variable before passing
+it as a `safe` string.
+
+## Spaces_to_underscores {#existing_stu}
+
+Convert spaces to underscores.
+
+    {{ string|spaces_to_underscores }}
+
+Replace a string's spaces to underscores. For example, "a hot dog" would
+become "a_hot_dog".
+
+## Underscores_to_spaces {#existing_uts}
+
+Convert underscores to spaces.
+
+    {{ string|underscores_to_spaces }}
+    
+Replace a string's underscores to spaces. For example, "a_hot_dog" would
+become "a hot dog".
+
+## Uppercase {#existing_uppercase}
+
+Convert a string to uppercase
+
+    {{ string|uppercase }}
