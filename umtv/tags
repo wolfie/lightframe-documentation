@@ -224,13 +224,13 @@ as many `elseif`s after eachother as you want.
 
   * istrue
   * isfalse
+  * exists
+  * empty
+  * notempty
   * equals / to
   * notequals / to
   * isgreater / than
   * isless / than
-  * exists
-  * empty
-  * notempty
   
 All tests can be used in both the `if` tag and the `elseif` tag equally.
 
