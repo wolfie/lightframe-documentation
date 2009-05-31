@@ -37,12 +37,10 @@ a new project:
     index.php > /home/henrikpaul/public_html/testproject
     settings.php > /home/henrikpaul/public_html/testproject
     urls.php > /home/henrikpaul/public_html/testproject
+    creating directory /home/henrikpaul/public_html/testproject/apps
+    creating directory /home/henrikpaul/public_html/testproject/templates
 
     new project created!
-
-Let's also make two directories, for later use:
-
-    $ mkdir apps templates
     
 Now you can continue with [Basic Project
 Configuration](#newproject_conf).
