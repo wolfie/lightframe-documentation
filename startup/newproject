@@ -16,10 +16,6 @@ set up, they're set, and hardly ever need further adjustment later on.
 
 ### The Script Way {#newproject_files_script}
 
-_The scripts are currently very rough around the edges and some commands
-don't even work anymore. Some script commands are planned to be moved
-into their own branches, until polished to completion._
-
 Open a console to your server (either via SSH or just a new terminal
 window). For this example, let's do a new project under your user's web
 directory, so you'll probably want to start with
